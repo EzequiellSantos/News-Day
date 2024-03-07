@@ -13,18 +13,18 @@
 
 <body>
 
-  <header id="news-header">
+  <header id="newsHeader">
 
-    <nav>
+    <nav id="newsMenu">
 
-      <div id="icon-menu">
+      <div id="iconMenu">
 
         <!-- menu hambuguer icon -->
-        <svg id="iconHamburguer" class="icons-menu" width="25" height="15" viewBox="0 0 25 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="25" height="3" rx="1.5" fill="#D9D9D9"/>
-          <rect width="25" height="3" rx="1.5" fill="#D9D9D9"/>
-          <path d="M0 13.5C0 12.6716 0.671573 12 1.5 12H23.5C24.3284 12 25 12.6716 25 13.5V13.5C25 14.3284 24.3284 15 23.5 15H1.5C0.671573 15 0 14.3284 0 13.5V13.5Z" fill="#D9D9D9"/>
-          <rect y="6" width="25" height="3" rx="1.5" fill="#D9D9D9"/>
+        <svg id="iconHamburguer" class="icons-menu" width="33" height="33" viewBox="0 0 25 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect class="color-adequed" width="25" height="3" rx="1.5" fill="#D9D9D9"/>
+          <rect class="color-adequed" width="25" height="3" rx="1.5" fill="#D9D9D9"/>
+          <path class="color-adequed" d="M0 13.5C0 12.6716 0.671573 12 1.5 12H23.5C24.3284 12 25 12.6716 25 13.5V13.5C25 14.3284 24.3284 15 23.5 15H1.5C0.671573 15 0 14.3284 0 13.5V13.5Z" fill="#D9D9D9"/>
+          <rect class="color-adequed" y="6" width="25" height="3" rx="1.5" fill="#D9D9D9"/>
           </svg>
 
           <!-- menu x icon -->
@@ -36,7 +36,7 @@
 
       </div>
 
-      <menu id="menu-side" class=""> <!-- menu lateral -->
+      <menu id="menuSide" class=""> <!-- menu lateral -->
 
         <section>
 
@@ -51,9 +51,9 @@
           <ul id="forResult">
             <li class="tittle-ul">Resultados</li>
           
-            <i></i><li>Data de Públicação</li>
-            <i></i><li>Relevância</li>
-            <i></i><li>Popularidade</li>
+            <i></i><li class="sub">Data de Públicação</li>
+            <i></i><li class="sub">Relevância</li>
+            <i></i><li class="sub">Popularidade</li>
           </ul>
 
           
@@ -66,7 +66,7 @@
 
             <li class="tittle-ul">Creditos</li>
 
-            <li><a href="" target="_blank" rel="noopener noreferrer">newsApi</a></li>
+            <li class="sub"><a href="" target="_blank" rel="noopener noreferrer">newsApi</a></li>
 
           </ul>
 
@@ -78,15 +78,12 @@
 
     <section id="sectionInput">
 
-      <input id="input" type="text" autocomplete="off">
+      <input id="input" type="text" autocomplete="off" placeholder="Palavra-Chave ex: futebol">
 
-      <div id="imgBusca">
 
-        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="48" height="48" viewBox="0 0 48 48">
-          <linearGradient id="k-j4mTUqemOh7ks8wj2_La_9WTVD8ibjNf7_gr1" x1="-454.999" x2="-399.516" y1="1266.026" y2="1312.582" gradientTransform="translate(462.7 -1263.06)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#262626" stop-opacity="0"></stop><stop offset="1" stop-color="#262626" stop-opacity=".8"></stop></linearGradient><circle cx="28" cy="20" r="17" fill="url(#k-j4mTUqemOh7ks8wj2_La_9WTVD8ibjNf7_gr1)"></circle><linearGradient id="k-j4mTUqemOh7ks8wj2_Lb_9WTVD8ibjNf7_gr2" x1="-14.642" x2="29.342" y1="51.585" y2="26.191" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#262626" stop-opacity="0"></stop><stop offset="1" stop-color="#262626" stop-opacity=".8"></stop></linearGradient><path fill="url(#k-j4mTUqemOh7ks8wj2_Lb_9WTVD8ibjNf7_gr2)" d="M18.89,34.35l-9.03,9.03c-1.96,1.96-5.12,1.96-7.08,0l-1.7-1.7l12.57-12.57 C14.99,31.22,16.78,33.01,18.89,34.35z"></path>
-          </svg>
-
-      </div>
+      <svg id="iconBusca" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="35" height="48" viewBox="0 0 48 48">
+        <linearGradient id="k-j4mTUqemOh7ks8wj2_La_9WTVD8ibjNf7_gr1" x1="-454.999" x2="-399.516" y1="1266.026" y2="1312.582" gradientTransform="translate(462.7 -1263.06)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#262626" stop-opacity="0"></stop><stop offset="1" stop-color="#262626" stop-opacity=".8"></stop></linearGradient><circle cx="28" cy="20" r="17" fill="url(#k-j4mTUqemOh7ks8wj2_La_9WTVD8ibjNf7_gr1)"></circle><linearGradient id="k-j4mTUqemOh7ks8wj2_Lb_9WTVD8ibjNf7_gr2" x1="-14.642" x2="29.342" y1="51.585" y2="26.191" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#262626" stop-opacity="0"></stop><stop offset="1" stop-color="#262626" stop-opacity=".8"></stop></linearGradient><path fill="url(#k-j4mTUqemOh7ks8wj2_Lb_9WTVD8ibjNf7_gr2)" d="M18.89,34.35l-9.03,9.03c-1.96,1.96-5.12,1.96-7.08,0l-1.7-1.7l12.57-12.57 C14.99,31.22,16.78,33.01,18.89,34.35z"></path>
+        </svg>
 
     </section>
 
@@ -119,27 +116,28 @@
 
     <aside id="titleSearch">
 
-      <h2 id="userSearch"> Resultados para [Pesquisa]</h2>
-      <p id="userChoice">de acordo com <mark>Palavra-Chave</mark> e <mark>Data de Publicação</mark></p>
+      <h1 id="userSearch"> Resultados com <span id="search">[Pesquisa]</span></h1>
+      <p id="userChoice">Exibindo resultados de acordo com <br><mark id="searchChoice">Palavra-Chave</mark> e <mark
+        id="resultChoice">Data de Publicação</mark></p>
 
     </aside>
 
     <article id="articleSubcontainer">
 
 
-      <a href="" target="_blank" rel="noopener noreferrer">
+      <a  class="news-card" href="" target="_blank" rel="noopener noreferrer">
 
         <!-- noopener => impede que a pagina aberta tenha acesso a página incial
              noreferrer => protege a privacidade 
         -->
 
-        <aside class="news-card">
+        <aside>
 
-          <h2 id="titleNews">Titulo da noticia</h2>
-          <p id="author">Autor</p>
-          <p id="font">fonte</p> <p id="date">Data</p>
+          <h2 id="titleNews">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, nostrum. Distinctio ipsa saepe neque praesentium nostrum doloremque amet tempore voluptatum facere, quod laudantium eius eos! Ad veniam hic ratione eligendi?</h2>
+          <p>Autor: <span id="author"></span></p>
+          <p>fonte: <span id="font"> </span> Data: <span id="date"></span></p>
 
-          <i id="information">i</i>
+          <i id="information">i</i><span id="mensage"> Os links das noticias são de fontes seguras e seus dados de navegação estão protegidos.</span>
 
         </aside>
 
