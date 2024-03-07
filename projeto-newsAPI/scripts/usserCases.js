@@ -4,11 +4,11 @@ export function chamarApi(busca, resposta) {
 
         if(true){ // verificações para saber qual criterio de busca e resposta o usuário escolheu
 
-            
+            console.log(busca + resposta)
 
         }
 
-        throw new Error('')
+        
 
     } catch (erro){
 
