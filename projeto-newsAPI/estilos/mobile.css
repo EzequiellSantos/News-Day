@@ -47,23 +47,63 @@ nav#newsMenu{
 }
 
 menu#menuSide{
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
-    background-color: var(--color-light00);
+    padding-top: 30px;
+    background-color: var(--color-light01);
 
     width: 40vh;
     max-width: 400px;
     height: 100vh;
 
-    display: none;
     flex-direction: column;
     justify-content: flex-start;
     overflow: hidden;
+
+
+}
+
+.init{
+    display: none;
+}
+
+.surgir{
+    animation: born 0.4s ease-in-out;
+}
+
+.desaparecer{
+    animation: bornX 0.4s  ease-in-out;
+}
+
+@keyframes born {
+
+    0%{
+        width: 0vh;
+        display: none;
+    }
+
+    100%{
+        width: 40vh;
+        display: block;
+    }
+
+}
+
+@keyframes bornX {
+    0%{
+        width: 40vh;
+    }
+
+    100%{
+        width: 0vh;
+        display: none;
+    }
 }
 
 ul{
     cursor: default;
+    margin: 40px 0px;
 }
 
 li{
@@ -80,18 +120,41 @@ li{
 
 
 .tittle-ul:hover{
-    background-color: var(--color-light01);
+    background-color: var(--color-dark00);
 }
 
 li.sub{
-    padding-left: 15px;
+    padding-left: 35px;
     margin: 10px 0px;
     font-size: 1.2em;
     display: none;
 }
 
+.exibirSub .sub{
+    display: block;
+}
+
 #iconX{
-    display: none;
+    position: fixed;
+    left: 33vh;
+    top: 15px;
+    z-index: 3;
+}
+
+.iconX-surgir{
+    animation: bornIconX 0.6s ease-in-out;
+}
+
+@keyframes bornIconX {
+    0%{
+        opacity: 0;
+        display: block;
+    }
+
+    100%{
+        opacity: 1;
+        display: block;
+    }
 }
 
 .color-adequed{
@@ -190,14 +253,6 @@ a.news-card{
 
 #author{
     text-transform: capitalize;
-}
-
-#font{
-
-}
-
-#date{
-
 }
 
 #information{
