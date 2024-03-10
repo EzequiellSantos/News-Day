@@ -1,6 +1,6 @@
 import { chamarApi } from "./usserCases.js";
 
-chamarApi(input, result, search)
+chamarApi(/* input, result, search */)
 
 
 
