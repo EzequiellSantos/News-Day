@@ -6,6 +6,21 @@ chamarApi()
 
 
 
+//ontrole input
+
+let pesquisaUser = ''
+var iconBusca = document.getElementById('iconBusca')
+var input = document.getElementById('input')
+iconBusca.addEventListener('click', clicouProcurar)
+
+function clicouProcurar(){
+
+    var valorInput = input.value
+    pesquisaUser = valorInput
+
+
+}
+
 // controle do menu
 var iconHambug = document.getElementById('iconHamburguer')
 var iconX = document.getElementById('iconX')
@@ -125,6 +140,7 @@ document.addEventListener('click', function(evento){
 
     if(!clicadoDentroDoElemento){
         ul.classList.remove('exibirSub')
+        
     }
 
     changeUl()
