@@ -233,18 +233,22 @@ article#articleSubcontainer{
 
 }
 
-a.news-card{
+aside.news-card{
     width: 90%;
     max-width: 330px;
     height: auto;
     background-color: var(--color-lightX);
-    color: #000;
-    text-decoration: none;
+
 
     display: relative;
     margin: 20px 0px;
     padding: 20px;
     border-radius: 13px;
+}
+
+.news-card a{
+    color: #000;
+    text-decoration: none;
 }
 
 #titleNews{

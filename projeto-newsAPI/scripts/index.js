@@ -1,7 +1,7 @@
 import { chamarApi } from "./usserCases.js";
 
-chamarApi(/* input, result, search */)
-
+chamarApi()
+/* input, result, search */
 
 
 
@@ -121,7 +121,6 @@ changeUl()
 
 
 document.addEventListener('click', function(evento){
-    const clicouDentro = menuSide.contains(evento.target)
     const clicadoDentroDoElemento = ul.contains(evento.target)
 
     if(!clicadoDentroDoElemento){
@@ -129,7 +128,5 @@ document.addEventListener('click', function(evento){
     }
 
     changeUl()
-
-
 
 })
