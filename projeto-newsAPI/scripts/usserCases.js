@@ -16,9 +16,9 @@ const apiPalavraURL = `https://newsapi.org/v2/top-headlines?q=${q}&apiKey=${keyA
 
 export async function chamarApi() {
     
-    try{
+    /*try{
 
-      const response = await fetch(apiCountryURL)
+       const response = await fetch(apiCountryURL)
 
       if(response.ok){
 
@@ -36,7 +36,7 @@ export async function chamarApi() {
 
       alert('Erro: ', error.mensage)
 
-    }
+    } */
 
 }
 
