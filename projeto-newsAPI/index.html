@@ -37,41 +37,44 @@
 
       <menu id="menuSide" class="init"> <!-- menu lateral -->
 
-        <section>
+        <section id="tittleUl">
 
-          <ul id="forSearch" class="initial">
+          
+
+          <ul id="forSearch">
+            
             <li class="tittle-ul">Busca</li>
 
-            
-            <input class="box" type="checkbox" id="checkPalavraChave">
+            <input class="box" name="search" type="radio" id="checkPalavraChave" checked>
             <span class="checkbox" id="checkboxPC"></span>
             <li class="sub"><label for="checkPalavraChave">Palavra-chave</label></li>
 
-            <input class="box" type="checkbox" id="checkDominio">
+            <input class="box" name="search" type="radio" id="checkDominio">
             <span class="checkbox" id="checkboxDM"></span>
             <li class="sub"><label for="checkDominio">Dominio</label></li>
 
-            <input class="box" type="checkbox" id="checkLanguage">
+            <input class="box" name="search" type="radio" id="checkLanguage">
             <span class="checkbox" id="checkboxLG"></span>
             <li class="sub"><label for="checkLanguage">Linguagem</label></li>
 
           </ul>
 
-          <ul id="forResult" class="initial">
-            <li class="tittle-ul">Resultados</li>
           
+          <ul id="forResult">         
 
-            <input class="box" type="checkbox" id="checkDate">
+            <li class="tittle-ul" >Resultados</li>
+
+            <input class="box" name="result" type="radio" id="checkDate" checked>
             <span class="checkbox" id="checkboxDT"></span>
-            <li class="sub">Data de <label for="checkDate">Públicação</label></li>
+            <li class="sub"><label for="checkDate">Data de Públicação</label></li>
 
-            <input class="box" type="checkbox" id="checkRelevance">
+            <input class="box" name="result" type="radio" id="checkRelevance">
             <span class="checkbox" id="checkboxRV"></span>
             <li class="sub"><label for="checkRelevance">Relevância</label></li>
 
-            <input class="box" type="checkbox" id="checkPopularity">
+            <input class="box" name="result" type="radio" id="checkPopularity">
             <span class="checkbox" id="checkboxPP"></span>
-            <li class="sub"><label for="checkRelevance">Popularidade</label></li>
+            <li class="sub"><label for="checkPopularity">Popularidade</label></li>
 
           </ul>
 
@@ -79,8 +82,8 @@
 
         <div>
 
-          <ul id="credits" class="initial">
 
+          <ul id="credits">
             <li class="tittle-ul">Creditos</li>
 
             <li class="sub"><a href="" target="_blank" rel="noopener noreferrer">newsApi</a></li>
@@ -170,5 +173,3 @@
   <script type="module" src="scripts/index.js"></script>
 
 </body>
-
-</html>
