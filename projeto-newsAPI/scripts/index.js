@@ -1,14 +1,13 @@
-import { chamarApi } from "./usserCases.js";
+import { chamarApi, checkPesquisa } from "./usserCases.js";
 
-chamarApi()
 /* input, result, search */
 
 
 
 
-//ontrole input
+//controle input
 
-let pesquisaUser = ''
+export let pesquisaUser = ''
 var iconBusca = document.getElementById('iconBusca')
 var input = document.getElementById('input')
 iconBusca.addEventListener('click', clicouProcurar)
@@ -17,6 +16,8 @@ function clicouProcurar(){
 
     var valorInput = input.value
     pesquisaUser = valorInput
+
+    checkPesquisa()
 
 
 }
@@ -60,89 +61,58 @@ function ocultar(){
 
 }
 
-menuSide.addEventListener('click', function(event){
-    const clicouDentro = menuSide.contains(event.target)
 
-    if(!clicouDentro){
-        ocultar()
-    }
+var ulForSearch = document.querySelector('#forSearch')
+var ulForResult = document.querySelector('#forResult')
+var ulForCredits = document.querySelector('#credits')
+
+/* document.getElementById('menuSide').addEventListener('click', function(event){
+
+    if(event.target.matches('li')){
+
+        var itemUl = event.target.id
+        teste(itemUl)
+
+    }   
 
 })
 
+*/
+ulForCredits.addEventListener('click', function(){
 
+    menuControl(ulForCredits)
 
-var ulForSearch = document.getElementById('forSearch')
-var ulForResult = document.getElementById('forResult')
-var ulForCredits = document.getElementById('credits')
+})
 
-ulForCredits.addEventListener('click', mostrarCredits)
-ulForResult.addEventListener('click', mostrarResults)
-ulForSearch.addEventListener('click', mostrarSearch)
+ulForResult.addEventListener('click', function(){
 
+    menuControl(ulForResult)
 
-function mostrarResults(){
-    displaySubtItensResult()
-    changeUl()
-}
+})
+ulForSearch.addEventListener('click', function(){
 
-function mostrarSearch(){
-    displaySubItensSearch()
-    changeUl()
-}
+    menuControl(ulForSearch)
 
-function mostrarCredits(){
-    displaySubItensCredits()
-    changeUl()
-}
+})
 
-function displaySubtItensResult(){
+let ul = ''
+function menuControl(list){
 
-    ulForResult.classList.add('exibirSub')
+    ul = list
 
-}
+    if(ul.classList.contains('exibirSub')){
 
-function displaySubItensSearch(){
-
-    ulForSearch.classList.add('exibirSub')
-
-}
-
-function displaySubItensCredits(){
-
-    ulForCredits.classList.add('exibirSub')
-
-}
-
-let ul = ulForCredits
-
-function changeUl(){
-
-    if(ulForCredits.classList.contains('exibirSub')){
-
-        ul = ulForCredits
-
-    } else if(ulForResult.classList.contains('exibirSub')){
-
-        ul = ulForResult
-
-    } else if(ulForSearch.classList.contains('exibirSub')){
-
-        ul = ulForSearch
-
-    } 
-}
-
-changeUl()
-
-
-document.addEventListener('click', function(evento){
-    const clicadoDentroDoElemento = ul.contains(evento.target)
-
-    if(!clicadoDentroDoElemento){
         ul.classList.remove('exibirSub')
-        
+
+
+    } else{
+
+        ul.classList.add('exibirSub')
+
     }
 
-    changeUl()
+}
 
-})
+export function teste(item0, item1){
+    console.log(item0, ' - >Teste')
+}

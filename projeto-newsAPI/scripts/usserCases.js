@@ -1,3 +1,4 @@
+import { pesquisaUser, teste } from "./index.js"
 
 var date = new Date()
 var day = date.getDate()
@@ -37,6 +38,17 @@ export async function chamarApi() {
       alert('Erro: ', error.mensage)
 
     } */
+
+}
+
+
+export function checkPesquisa(){
+
+  titleSearch.style.display = 'block'
+  search.innerHTML = `${pesquisaUser}`
+  articleSubcontainer.style.display = 'none'
+
+  teste('Funciona?')
 
 }
 
