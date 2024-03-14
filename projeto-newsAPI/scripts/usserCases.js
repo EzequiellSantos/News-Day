@@ -1,4 +1,4 @@
-import { pesquisaUser, teste } from "./index.js"
+import { inputsChecks, pesquisaUser, teste } from "./index.js"
 
 var date = new Date()
 var day = date.getDate()
@@ -15,7 +15,7 @@ const apiCountryURL = `https://newsapi.org/v2/top-headlines?country=${country}&a
 /*     const apiCategoriaURL = `https://newsapi.org/v2/top-headlines?sources=${categoria}&apiKey=${keyAPI}`
 const apiPalavraURL = `https://newsapi.org/v2/top-headlines?q=${q}&apiKey=${keyAPI}` */
 
-export async function chamarApi() {
+export async function chamarApi(userSearch, search, result) {
     
     /*try{
 
@@ -44,11 +44,63 @@ export async function chamarApi() {
 
 export function checkPesquisa(){
 
+  adequedFrontEnd(inputsChecks[0], inputsChecks[1])
+
   titleSearch.style.display = 'block'
   search.innerHTML = `${pesquisaUser}`
-  articleSubcontainer.style.display = 'none'
+  searchChoice.innerHTML = `${busca}`
+  resultChoice.innerHTML = `${resultado}`
 
-  teste('Funciona?')
+}
+
+let busca = ''
+let resultado = ''
+
+export function adequedFrontEnd(search, results){
+
+
+  switch(search){
+    case 'checkPalavraChave':
+      busca = 'Palavra-Chave'
+      break
+
+    case 'checkDominio':
+      busca = 'Domínio'
+      break
+    
+    case 'checkLanguage':
+      busca = 'Língua'
+      break
+  }
+
+  switch(results){
+    case 'checkDate':
+      resultado = 'Data'
+      break
+    
+    case 'checkRelevance':
+      resultado = 'Relevância'
+      break
+    
+    case 'checkPopularity':
+      resultado = 'Popularidade'
+      break
+  }
+
+}
+
+
+export let lastSearch = localStorage.getItem('lastSearch')
+export let LastChoiceSearch = localStorage.getItem('LastChoiceSearch')
+export let LastChoiceResult =  localStorage.getItem('LastChoiceResult') 
+
+export function firstVisitUser(){
+  
+  if( lastSearch && LastChoiceSearch && LastChoiceResult ){
+
+    console.log(lastSearch, resultado, busca)
+
+  }
 
 }
 
