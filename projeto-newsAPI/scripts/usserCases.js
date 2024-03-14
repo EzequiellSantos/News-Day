@@ -1,4 +1,4 @@
-import { inputsChecks, pesquisaUser, teste } from "./index.js"
+import { cleanLocalStorage, inputsChecks, pesquisaUser, teste } from "./index.js"
 
 var date = new Date()
 var day = date.getDate()
@@ -42,6 +42,7 @@ export async function chamarApi(userSearch, search, result) {
 }
 
 
+// mostrando ao usuário o seu critério de busca e a sua pesquisa inserida no input
 export function checkPesquisa(){
 
   adequedFrontEnd(inputsChecks[0], inputsChecks[1])
@@ -52,6 +53,9 @@ export function checkPesquisa(){
   resultChoice.innerHTML = `${resultado}`
 
 }
+
+
+// adequando o back-front
 
 let busca = ''
 let resultado = ''
@@ -90,6 +94,8 @@ export function adequedFrontEnd(search, results){
 }
 
 
+// verificando se é a primeira visita do usuário na página
+
 export let lastSearch = localStorage.getItem('lastSearch')
 export let LastChoiceSearch = localStorage.getItem('LastChoiceSearch')
 export let LastChoiceResult =  localStorage.getItem('LastChoiceResult') 
@@ -98,9 +104,13 @@ export function firstVisitUser(){
   
   if( lastSearch && LastChoiceSearch && LastChoiceResult ){
 
-    console.log(lastSearch, resultado, busca)
+    console.log(lastSearch, busca, resultado)
 
+  } else{
+    teste('você não possui pesquisas recentes')
   }
 
 }
+
+
 

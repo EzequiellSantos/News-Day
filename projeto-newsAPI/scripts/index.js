@@ -13,6 +13,7 @@ var iconBusca = document.getElementById('iconBusca')
 var input = document.getElementById('input')
 iconBusca.addEventListener('click', clicouProcurar)
 
+// quando o usuário clicar a teca enter no input
 input.addEventListener('keydown', function (event) {
 
     if(event.keyCode === 13){
@@ -21,6 +22,7 @@ input.addEventListener('keydown', function (event) {
 
 })
 
+// quando o usuário clicar na lupa
 function clicouProcurar(){
 
     var valorInput = input.value
@@ -41,7 +43,8 @@ function updateLocalStorage(){
 
 }
 
-function cleanLocalStorage(){
+// limpar o local storage
+export function cleanLocalStorage(){
 
     localStorage.removeItem('lastSearch')
     localStorage.removeItem('LastChoiceSearch')
@@ -50,8 +53,8 @@ function cleanLocalStorage(){
 
 }
 
+// coletar os critérios de busca do usuário
 export let inputsChecks = []
-
 function coletingChoices(){
 
     inputsChecks = []
