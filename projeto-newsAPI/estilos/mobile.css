@@ -185,7 +185,7 @@ input.box{
 }
 
 input#checkDominio:checked ~ #checkboxDM,
-input#checkLanguage:checked ~ #checkboxLG,
+input#checkTop:checked ~ #checkboxTP,
 input#checkPalavraChave:checked ~ #checkboxPC,
 input#checkDate:checked ~ #checkboxDT,
 input#checkRelevance:checked ~ #checkboxRV,

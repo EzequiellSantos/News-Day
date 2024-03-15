@@ -1,8 +1,7 @@
-import { LastChoiceResult, LastChoiceSearch, adequedFrontEnd, chamarApi, checkPesquisa, firstVisitUser } from "./usserCases.js";
+import { LastChoiceResult, LastChoiceSearch, adequedFrontEnd, checkPesquisa, definirUrls, firstVisitUser, busca, resultado, updatePlaceHolder } from "./usserCases.js";
 
 /* input, result, search */
 
-adequedFrontEnd(LastChoiceSearch, LastChoiceResult)
 firstVisitUser()
 
 
@@ -10,11 +9,11 @@ firstVisitUser()
 
 export let pesquisaUser = ''
 var iconBusca = document.getElementById('iconBusca')
-var input = document.getElementById('input')
+export var inputElement = document.getElementById('input')
 iconBusca.addEventListener('click', clicouProcurar)
 
 // quando o usuário clicar a teca enter no input
-input.addEventListener('keydown', function (event) {
+inputElement.addEventListener('keydown', function (event) {
 
     if(event.keyCode === 13){
         clicouProcurar()
@@ -26,11 +25,23 @@ input.addEventListener('keydown', function (event) {
 function clicouProcurar(){
 
     var valorInput = input.value
-    pesquisaUser = valorInput
 
-    coletingChoices()
-    checkPesquisa()
-    updateLocalStorage()
+    if(valorInput == ''){
+
+        console.error('Ja era')
+
+        return
+
+    } else{
+
+        pesquisaUser = valorInput
+        coletingChoices() // coleta os parâmetros de pesquisa do usuário
+        checkPesquisa() // fornece ao usuário os parâmetros de pesquisas
+        definirUrls(pesquisaUser, busca, resultado)
+        updateLocalStorage() // so caso o usuário aceitar
+
+    }
+
 
 }
 
@@ -69,6 +80,9 @@ function coletingChoices(){
         }
 
     })
+
+    adequedFrontEnd(inputsChecks[0], inputsChecks[1])
+    updatePlaceHolder(busca)
     
 
 }
@@ -182,5 +196,6 @@ function menuControl(list){
 }
 
 export function teste(item0, item1){
-    console.log(' - >Teste', item0, item1)
+    console.log(' - >Teste ', item0, item1)
+    console.log(' - >Typeof ', typeof(item0), typeof(item1))
 }
