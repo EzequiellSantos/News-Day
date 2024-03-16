@@ -107,6 +107,7 @@ function coletingChoices(){
 var iconHambug = document.getElementById('iconHamburguer')
 var iconX = document.getElementById('iconX')
 var menuSide = document.getElementById('menuSide')
+var navMenu = document.getElementById('newsMenu')
 
 
 iconX.addEventListener('click', ocultar)
@@ -114,8 +115,8 @@ iconHambug.addEventListener('click', clicou)
 
 function clicou() {
 
-    menuSide.classList.remove('desaparecer')
-    menuSide.classList.add('surgir')
+    navMenu.classList.remove('desaparecer')
+    navMenu.classList.add('surgir')
     menuSide.classList.remove('init')
 
     iconHambug.style.opacity = '0'
@@ -127,7 +128,7 @@ function clicou() {
 
 function ocultar(){
 
-    menuSide.classList.add('desaparecer')
+    navMenu.classList.add('desaparecer')
     
     setTimeout(function(){
         menuSide.classList.add('init')
@@ -137,10 +138,13 @@ function ocultar(){
     iconX.classList.add('init')
     iconHambug.style.opacity = '1'
     iconX.classList.remove('iconX-surgir')
-    menuSide.classList.remove('surgir')
+    navMenu.classList.remove('surgir')
 
 }
 
+lastViewPort.addEventListener('click', function(){
+    ocultar()
+})
 
 var ulForSearch = document.querySelector('#forSearch')
 var ulForResult = document.querySelector('#forResult')

@@ -50,14 +50,17 @@ nav#newsMenu{
 
 menu#menuSide{
     position: fixed;
+    float: left;
     left: 0;
     top: 0;
     padding-top: 50px;
     background-color: var(--color-light01);
 
-    width: 35vh;
+    width: 75vw;
     max-width: 400px;
     height: 100vh;
+
+    z-index: 3;
 
     flex-direction: column;
     justify-content: flex-start;
@@ -66,16 +69,41 @@ menu#menuSide{
 
 }
 
+#lastViewPort{
+    position: fixed;
+    display: none;
+    width: 30vw;
+    top: 0;
+    right: 0;
+    max-width: 900px;
+    height: 100vh;
+
+    background-color: #6e6e6e3b;
+    box-shadow: inset 0.2em 0.1em 3em rgba(0, 0, 0, 0.158);
+    transition: all .85s;
+
+}
+
 .init{
     display: none;
 }
 
-.surgir{
+.surgir #menuSide{
     animation: born 0.4s ease-in-out;
 }
 
-.desaparecer{
+.surgir #lastViewPort{
+    display: block;
+    animation: subBorn 1.6s ease-in;
+}
+
+.desaparecer #menuSide{
     animation: bornX 0.4s  ease-in-out;
+}
+
+.desaparecer #lastViewPort{
+    display: none;
+    animation: subBorn 0.35s reverse ease-in;
 }
 
 @keyframes born {
@@ -86,7 +114,7 @@ menu#menuSide{
     }
 
     100%{
-        width: 35vh;
+        width: 75vw;
         display: block;
     }
 
@@ -94,7 +122,7 @@ menu#menuSide{
 
 @keyframes bornX {
     0%{
-        width: 35vh;
+        width: 75vw;
     }
 
     100%{
@@ -103,11 +131,25 @@ menu#menuSide{
     }
 }
 
+@keyframes subBorn {
+    0%{
+        opacity: 0;
+    }
+
+    50%{
+        opacity: 0.5;
+    }
+
+    100%{
+        opacity: 1;
+    }
+}
+
 #iconX{
     position: fixed;
-    left: 27vh;
+    left: 60vw;
+    z-index: 4;
     top: 30px;
-    z-index: 3;
 }
 
 .iconX-surgir{
