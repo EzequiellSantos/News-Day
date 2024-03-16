@@ -18,12 +18,10 @@ export function definirUrls(userSearch, search, result){  if(search == 'Palavra-
   if(search == 'Palavra-Chave')
 
     adequedUrlKeyWord(userSearch, result)
-    updatePlaceHolder(search)
 
   }else if(search == 'Domínio'){
 
     adequarUrlDomain(userSearch, result)
-    updatePlaceHolder(search)
 
   }
 
@@ -109,6 +107,7 @@ export async function chamarAPI(apiURL){
       if(response.ok){
 
         const dados = await response.json()
+        consumirDados(dados)
         console.log(dados)
 
       } else{
@@ -126,7 +125,9 @@ export async function chamarAPI(apiURL){
           console.error('Nosso Provedor de Noticias Está com problemas')
 
         } else {
+
           console.log(response.status)
+
         }
 
       }
@@ -140,7 +141,131 @@ export async function chamarAPI(apiURL){
 
 } 
 
+export let artigos = {
 
+  manchetes: {
+
+    url: [],
+    urlImage: [],
+    font: [],
+    data: [],
+    autor: [],
+    titulo: [],
+    descricao: [],
+    texto: []
+
+  }
+
+
+}
+
+let quantidArtigos = 0
+
+async function consumirDados(dados){
+
+  quantidArtigos = await dados.articles.length >= 10 ? 10 : dados.articles.length
+  
+  for(let t = 0 ; t <= quantidArtigos ; t++){
+
+
+    artigos.manchetes.autor.push(dados.articles[t].author)
+
+    artigos.manchetes.url.push(dados.articles[t].url)
+
+    artigos.manchetes.urlImage.push(dados.articles[t].urlToImage)
+
+    artigos.manchetes.font.push(dados.articles[t].source.name)
+
+    artigos.manchetes.titulo.push(dados.articles[t].title)
+
+    artigos.manchetes.descricao.push(dados.articles[t].description)
+
+    artigos.manchetes.texto.push(dados.articles[t].content)
+
+    artigos.manchetes.data.push(dados.articles[t].publishedAt)
+
+  } 
+
+  exibirFrontEnd()
+  console.log(artigos)
+
+}
+
+export function limparSearch(){
+
+  for(var a in artigos.manchetes.autor){
+
+    if(artigos.manchetes.autor[a] == null){
+
+      teste('pika')
+
+    } else{
+
+      teste('rola')
+
+    }
+
+  }
+
+}
+
+console.log(artigos.descricao)
+
+var articleSub = document.getElementById('articleSubcontainer')
+
+function exibirFrontEnd(){  
+
+  for(let y = 0 ; y <= quantidArtigos ; y++){
+
+    // criando a tag container do card de noticias
+    var aside = document.createElement('aside')
+    aside.setAttribute('class', 'news-card')
+
+    articleSub.appendChild(aside)
+
+    // criando link
+    var link =  document.createElement('a')
+    link.target = '_blank'
+    link.rel = 'noopener noreferrer'
+    link.href = artigos.manchetes.url[y]
+
+    // criando titulo
+    var tittleNews = document.createElement('h2')
+    tittleNews.setAttribute('id', 'tittleNews')
+    tittleNews.textContent = artigos.manchetes.titulo[y]
+
+    link.appendChild(tittleNews)
+
+    //criando descrição
+    var pDescription = document.createElement('p')
+    pDescription.setAttribute('id', 'description')
+    pDescription.textContent = artigos.manchetes.descricao[y]
+
+
+    
+
+    // criando information
+    var iconI = document.createElement('i')
+    iconI.innerText = 'i'
+    iconI.setAttribute('id', 'information')
+
+    // criando texto para cada info
+    var span = document.createElement('span')
+    span.setAttribute('id', 'mensage')
+    span.innerHTML = ' Os links das noticias são de fontes seguras e seus dados de navegação estão protegidos.'
+
+
+    // colocando todas as tag como filhas do aisde subcontainer
+    aside.appendChild(link)
+    aside.appendChild(pDescription)
+    aside.appendChild(iconI)
+    aside.appendChild(span)
+ 
+  }
+
+}
+
+///limparArtigos(aside)
 // mostrando ao usuário o seu critério de busca e a sua pesquisa inserida no input
 export function checkPesquisa(){
 
@@ -220,4 +345,7 @@ export function firstVisitUser(){
 
 }
 
+function limparArtigos(child){
+  articleSub.removeChild(child)
+}
 

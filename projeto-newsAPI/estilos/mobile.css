@@ -295,6 +295,10 @@ section#sectionInput{
     color: var(--color-light01);
 }
 
+#iconBusca:active{
+    transform: scale(1.06);
+}
+
 nav#toggle-theme{
     display: block;
 }
@@ -366,7 +370,12 @@ aside.news-card{
 }
 
 #titleNews{
-    margin: 10px 0px;
+    margin: 10px 0;
+}
+
+#description{
+    margin: 7px 0;
+    font-size: 0.9em;
 }
 
 #author{

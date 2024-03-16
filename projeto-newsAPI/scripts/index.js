@@ -1,4 +1,4 @@
-import { LastChoiceResult, LastChoiceSearch, adequedFrontEnd, checkPesquisa, definirUrls, firstVisitUser, busca, resultado, updatePlaceHolder } from "./usserCases.js";
+import { LastChoiceResult, LastChoiceSearch, adequedFrontEnd, checkPesquisa, definirUrls, firstVisitUser, busca, resultado, updatePlaceHolder, artigos, limparSearch } from "./usserCases.js";
 
 /* input, result, search */
 
@@ -32,8 +32,11 @@ function clicouProcurar(){
 
         return
 
-    } else{
+    } else if(false){
 
+
+
+    } else{
         pesquisaUser = valorInput
         coletingChoices() // coleta os parâmetros de pesquisa do usuário
         checkPesquisa() // fornece ao usuário os parâmetros de pesquisas
@@ -140,10 +143,13 @@ function ocultar(){
     iconX.classList.remove('iconX-surgir')
     navMenu.classList.remove('surgir')
 
+    coletingChoices()
+
 }
 
 lastViewPort.addEventListener('click', function(){
     ocultar()
+    coletingChoices()
 })
 
 var ulForSearch = document.querySelector('#forSearch')
