@@ -1,4 +1,4 @@
-import { cleanLocalStorage, inputElement, inputsChecks, pesquisaUser, teste } from "./index.js"
+import { cleanLocalStorage, inputElement, inputsChecks, pesquisaUser, teste, tittleContainer } from "./index.js"
 
 var date = new Date()
 var day = date.getDate()
@@ -13,9 +13,9 @@ const keyAPI = '8164a1687d9e4d80a5901e71edaf039c'
 
 var url = ''
 
-export function definirUrls(userSearch, search, result){  if(search == 'Palavra-Chave' ){
+export function definirUrls(userSearch, search, result){
   
-  if(search == 'Palavra-Chave')
+  if(search == 'Palavra-Chave'){
 
     adequedUrlKeyWord(userSearch, result)
 
@@ -98,6 +98,9 @@ const apiCountryURL = `https://newsapi.org/v2/top-headlines?country=${country}&a
     const apiCategoriaURL = `https://newsapi.org/v2/top-headlines?sources=${categoria}&apiKey=${keyAPI}`
 const apiPalavraURL = `https://newsapi.org/v2/top-headlines?q=${q}&apiKey=${keyAPI}` */
 
+
+export let sucessResult = null
+
 export async function chamarAPI(apiURL){
     
     try{
@@ -109,8 +112,11 @@ export async function chamarAPI(apiURL){
         const dados = await response.json()
         consumirDados(dados)
         console.log(dados)
+        sucessResult = true
 
       } else{
+
+        sucessResult = false
 
         if(response.status == 400){
 
@@ -163,7 +169,7 @@ let quantidArtigos = 0
 
 async function consumirDados(dados){
 
-  quantidArtigos = await dados.articles.length >= 10 ? 10 : dados.articles.length
+  quantidArtigos = await dados.articles.length >= 2 ? 2 : dados.articles.length
   
   for(let t = 0 ; t <= quantidArtigos ; t++){
 
@@ -191,27 +197,27 @@ async function consumirDados(dados){
 
 }
 
-export function limparSearch(){
+/* export function limparSearch(){ // limpar objeto
 
   for(var a in artigos.manchetes.autor){
 
     if(artigos.manchetes.autor[a] == null){
 
-      teste('pika')
+      teste('hellooo')
 
     } else{
 
-      teste('rola')
+      teste('byeee')
 
     }
 
   }
 
-}
+} */
 
-console.log(artigos.descricao)
+console.log(artigos.descricao + 'kkkk')
 
-var articleSub = document.getElementById('articleSubcontainer')
+export var articleSub = document.getElementById('articleSubcontainer')
 
 function exibirFrontEnd(){  
 
@@ -241,9 +247,6 @@ function exibirFrontEnd(){
     pDescription.setAttribute('id', 'description')
     pDescription.textContent = artigos.manchetes.descricao[y]
 
-
-    
-
     // criando information
     var iconI = document.createElement('i')
     iconI.innerText = 'i'
@@ -270,16 +273,53 @@ function exibirFrontEnd(){
 export function checkPesquisa(){
 
   adequedFrontEnd(inputsChecks[0], inputsChecks[1])
-
-  titleSearch.style.display = 'block'
-  search.innerHTML = `${pesquisaUser}`
-  searchChoice.innerHTML = `${busca}`
-  resultChoice.innerHTML = `${resultado}`
+  mostrarTitle()
 
 }
 
 
-// adequando o back-front
+export function mostrarTitle(){
+
+  /*   if(tittleContainer.hasChildNodes() == true){ */
+
+  /* tittleContainer.forEach(function(container) {
+    container.clear()
+  }) */
+
+
+  var h1 = document.createElement('h1')
+  h1.setAttribute('id', 'userSearch') 
+  h1.innerHTML = `Resultados com `
+  
+  var search = document.createElement('span')
+  search.setAttribute('id', 'search')
+  search.innerHTML = ` ${pesquisaUser}`
+  h1.appendChild(search)
+
+  var p = document.createElement('p')
+  p.setAttribute('id', 'userChoice')
+  p.innerHTML = `Exibindo resultados com base em <br>`
+
+  var markSearch = document.createElement('mark') // depois criar o mark dois e dps anexalo ao p, para ver se ee aceita
+  markSearch.setAttribute('id', 'searchChoice')
+  markSearch.innerHTML = `${busca}`
+
+  var markResult = document.createElement('mark')
+  markResult.setAttribute('id', 'resultChoice')
+  markResult.innerHTML = `${resultado}`
+
+  p.appendChild(markSearch)
+  p.innerHTML += ' e '
+  p.appendChild(markResult)
+
+  tittleContainer.appendChild(h1)
+  tittleContainer.appendChild(p)
+  
+
+}
+
+
+// adequando o back para front
 
 export let busca = ''
 export let resultado = ''
@@ -345,7 +385,18 @@ export function firstVisitUser(){
 
 }
 
-function limparArtigos(child){
-  articleSub.removeChild(child)
+export function limparArtigos(){
+
+  var containers = document.querySelectorAll('.container')
+
+
+    containers.forEach( function(container) {
+      container.remove()
+    })
+
+
+    return console.log('limpando') 
+  
+  
 }
 

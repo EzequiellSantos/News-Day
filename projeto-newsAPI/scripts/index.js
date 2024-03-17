@@ -1,4 +1,4 @@
-import { LastChoiceResult, LastChoiceSearch, adequedFrontEnd, checkPesquisa, definirUrls, firstVisitUser, busca, resultado, updatePlaceHolder, artigos, limparSearch } from "./usserCases.js";
+import { LastChoiceResult, LastChoiceSearch, adequedFrontEnd, checkPesquisa, definirUrls, firstVisitUser, busca, resultado, updatePlaceHolder, artigos, limparArtigos, sucessResult, articleSub, mostrarTitle } from "./usserCases.js";
 
 /* input, result, search */
 
@@ -9,42 +9,58 @@ firstVisitUser()
 
 export let pesquisaUser = ''
 var iconBusca = document.getElementById('iconBusca')
-export var inputElement = document.getElementById('input')
 iconBusca.addEventListener('click', clicouProcurar)
+
+export var inputElement = document.getElementById('input')
+export var tittleContainer = document.getElementById('titleSearch')
 
 // quando o usuário clicar a teca enter no input
 inputElement.addEventListener('keydown', function (event) {
 
-    if(event.keyCode === 13){
+    if(event.keyCode == 13){
         clicouProcurar()
     }
 
 })
 
+
+
 // quando o usuário clicar na lupa
 function clicouProcurar(){
 
-    var valorInput = input.value
+    let valorInput = input.value
 
     if(valorInput == ''){
 
-        console.error('Ja era')
+        /* limparArtigos() */
+        var status = document.createElement('h2')
+        status.setAttribute('id', 'status')
+        status.textContent = 'Não há resultados para essa pesquisa'
+        tittleContainer.appendChild(status)
+        /* adicionar ao mostrar titulo / depois  */
+
+    }else if(sucessResult == false){
+
+        /* limparArtigos() */
+        var status = document.createElement('h2')
+        status.setAttribute('id', 'status')
+        status.textContent = 'Não há resultados para essa pesquisa'
+        tittleContainer.appendChild(status)
+        /* adicionar essa condicional ao mostra titulo / depois */
 
         return
 
-    } else if(false){
-
-
-
-    } else{
+    } else if(sucessResult !== false){
         pesquisaUser = valorInput
         coletingChoices() // coleta os parâmetros de pesquisa do usuário
         checkPesquisa() // fornece ao usuário os parâmetros de pesquisas
         definirUrls(pesquisaUser, busca, resultado)
         updateLocalStorage() // so caso o usuário aceitar
+        teste('called true')
 
     }
 
+    input.value = ''
 
 }
 
@@ -144,12 +160,13 @@ function ocultar(){
     navMenu.classList.remove('surgir')
 
     coletingChoices()
+    mostrarTitle()
 
 }
 
-lastViewPort.addEventListener('click', function(){
-    ocultar()
-    coletingChoices()
+lastViewPort.addEventListener('click', function(){ // clicando fora do menu ativo
+    ocultar() // recolher menu
+    coletingChoices() // coletar escolha do usuário para pesquisa
 })
 
 var ulForSearch = document.querySelector('#forSearch')
