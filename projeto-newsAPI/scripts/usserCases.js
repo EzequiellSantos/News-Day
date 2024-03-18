@@ -215,7 +215,6 @@ async function consumirDados(dados){
 
 } */
 
-console.log(artigos.descricao + 'kkkk')
 
 export var articleSub = document.getElementById('articleSubcontainer')
 
