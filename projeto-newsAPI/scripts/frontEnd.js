@@ -195,6 +195,8 @@ export function checkPesquisa(){
 
 export let antigoSearch = ''
 
+export var p = document.createElement('p')
+
 export function mostrarTitle(){
 
     /*   if(tittleContainer.hasChildNodes() == true){ */
@@ -224,12 +226,12 @@ export function mostrarTitle(){
         antigoSearch =  search.innerHTML = ` ${pesquisaUser}`
         h1.appendChild(search)
       
-        var p = document.createElement('p')
+
         p.setAttribute('id', 'userChoice')
-        p.setAttribute('class', 'children')
-        p.innerHTML = `Exibindo resultados com base em <br class="children">`
-      
-        var markSearch = document.createElement('mark') // depois criar o mark dois e dps anexalo ao p, para ver se ee aceita
+        p.setAttribute('class', 'container')
+        p.innerHTML = `Exibindo resultados com base em <br>`
+
+        var markSearch = document.createElement('mark')
         markSearch.setAttribute('id', 'searchChoice')
         markSearch.innerHTML = `${busca}`
       
@@ -238,8 +240,7 @@ export function mostrarTitle(){
         markResult.innerHTML = `${resultado}`
 
         var pALt = document.createElement('span')
-        pALt.setAttribute('class', 'children')
-        pALt.innerHTML = ' e '
+        pALt.textContent = ' e '
 
         p.appendChild(markSearch)
         p.appendChild(pALt)

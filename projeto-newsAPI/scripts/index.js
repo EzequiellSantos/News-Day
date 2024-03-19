@@ -24,14 +24,7 @@ export function clicouProcurar(){
         exbirErroStatus()
         console.log('error 1')
 
-    }else if(sucessResult == false){
-
-        limparArtigos()
-        exbirErroStatus()
-        console.log('erro 2')
-
-
-    } else if(callsSussced == 0 && errorMensage == true){ // Tudo Ok
+    }else if(callsSussced == 0 && errorMensage == true){ // Tudo Ok
 
         console.log('fantasminha presente')
         limparArtigos()
@@ -68,7 +61,15 @@ export function clicouProcurar(){
     limparUserSearch()
     input.value = ''
 
+/* else if(sucessResult == false){
 
+        limparArtigos()
+        exbirErroStatus()
+        console.log('erro 2')
+
+
+
+    }  */
 
 
 }

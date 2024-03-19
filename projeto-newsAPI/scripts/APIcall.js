@@ -1,5 +1,5 @@
-import { exbirErroStatus, exibirFrontEnd, tooManyCalls } from "./frontEnd.js"
-import { artigos, limparArtigos } from "./backEnd.js"
+import { errorMensage, exbirErroStatus, exibirFrontEnd, noServerConneting, tooManyCalls } from "./frontEnd.js"
+import { artigos, limparArtigos, test } from "./backEnd.js"
 import { limparUserSearch, pesquisaUser } from "./index.js"
 
 //script de todo o código de consumo da API (trasnformações de url, seleção dos dados e status da chamadas)
@@ -11,7 +11,7 @@ var ano = date.getFullYear()
 var mesAtual = mes + 1
 let dateToday = `${ano}-${mesAtual.toString().padStart(2, '0')}-${day - 1}`
 
-const keyAPI = '8164a1687d9e4d80a5901e71edaf039c'
+const apiKey = '8164a1687d9e4d80a5901e71edaf039c'
 
 // chamadas de  api
 
@@ -31,7 +31,76 @@ export function definirUrls(search, result) {
 
 
     limparUserSearch()
-    chamarAPI(url)
+    fetch(url, {
+
+        method: 'GET',
+        headers: {
+            'X-API-Key': apiKey
+        }
+    
+    })
+    .then(response => {       
+    
+        if(!response.ok){
+
+            sucessResult = false
+            throw new Error(response.status)
+
+        }
+
+        return  response.json()
+    
+
+
+        
+        }) 
+        .then(data => {
+
+            if(data.totalResults == 0){
+                sucessResult = false
+                exbirErroStatus()
+                throw new Error('Erro: sem resultados para essa pesquisa')
+
+            } else{
+
+                sucessResult = true
+                consumirDados(data) 
+                console.log(data)
+    
+                callsSussced += 1
+
+            }
+
+
+
+        })
+    
+        .catch(error =>  {                
+            
+
+            if (error.message == 400) {
+        
+                console.error('Não encontrado esse tipo de pesquisa')
+                exbirErroStatus()
+
+            } else if (error.message == 429) {
+
+                tooManyCalls()
+                console.error('Você Fez Muitas solicitações')
+
+            } else if (error.message == 500) {
+
+                noServerConneting()
+                console.error('Nosso Provedor de Noticias Está com problemas')
+
+            } else {
+
+                console.log(error.status)
+                console.error('Erro: ', error.status)
+
+            }
+
+        })
 
 }
 
@@ -39,19 +108,19 @@ function adequedUrlKeyWord(userSearch, result) {
 
     if (result == 'Data') {
 
-        url = `https://newsapi.org/v2/everything?q=${userSearch}&from=${dateToday}&to=${dateToday}&sortBy=publishedAt&apiKey=${keyAPI}`
+        url = `https://newsapi.org/v2/everything?q=${userSearch}&from=${dateToday}&to=${dateToday}&sortBy=publishedAt`
 
     } else if (result == 'Popularidade') {
 
-        url = `https://newsapi.org/v2/everything?q=${userSearch}&sortBy=popularity&apiKey=${keyAPI}`
+        url = `https://newsapi.org/v2/everything?q=${userSearch}&sortBy=popularity`
 
     } else if (result == 'Relevância') {
 
-        url = `https://newsapi.org/v2/everything?q=${userSearch}&sortBy=relevancy&apiKey=${keyAPI}`
+        url = `https://newsapi.org/v2/everything?q=${userSearch}&sortBy=relevancy`
 
     } else if (result == 'Última-Hora') {
 
-        url = `https://newsapi.org/v2/top-headlines?q=${userSearch}&apiKey=${keyAPI}`
+        url = `https://newsapi.org/v2/top-headlines?q=${userSearch}`
 
     }
 
@@ -63,19 +132,19 @@ function adequarUrlDomain(userSearch, result) {
 
     if (result == "Data") {
 
-        url = `https://newsapi.org/v2/everything?domains=${userSearch}&from=${dateToday}&to=${dateToday}&sortBy=publishedAt&apiKey=${keyAPI}`
+        url = `https://newsapi.org/v2/everything?domains=${userSearch}&from=${dateToday}&to=${dateToday}&sortBy=publishedAt`
 
     } else if (result == 'Popularidade') {
 
-        url = `https://newsapi.org/v2/everything?domains=${userSearch}&sortBy=popularity&apiKey=${keyAPI}`
+        url = `https://newsapi.org/v2/everything?domains=${userSearch}&sortBy=popularity`
 
     } else if (result == 'Relevância') {
 
-        url = `https://newsapi.org/v2/everything?domains=${userSearch}&sortBy=relevancy&apiKey=${keyAPI}`
+        url = `https://newsapi.org/v2/everything?domains=${userSearch}&sortBy=relevancy`
 
     } else if (result == 'Última-Hora') {
 
-        url = `https://newsapi.org/v2/top-headlines?domains=${userSearch}&apiKey=${keyAPI}`
+        url = `https://newsapi.org/v2/top-headlines?domains=${userSearch}`
 
     }
 
@@ -83,72 +152,29 @@ function adequarUrlDomain(userSearch, result) {
 
 }
 
-export let sucessResult = null
+export let sucessResult = null 
 export let callsSussced = 0
 
-export async function chamarAPI(apiURL) {
-
-    try {
-
-        var response = await fetch(apiURL)
-
-        if (response.ok) {
-
-            var dados = await response.json()
-            consumirDados(dados)
-            console.log(dados)
-            console.log(pesquisaUser)
-
-            sucessResult = true
-            callsSussced += 1
-
-        } else {
-
-            sucessResult = false
-            
-
-            if (response.status == 400) {
-
-                console.error('Não encontrado esse tipo de pesquisa')
-                exbirErroStatus()
-
-            } else if (response.status == 429) {
-
-                tooManyCalls()
-                console.error('Você Fez Muitas solicitações')
-
-            } else if (response.status == 500) {
-
-                console.error('Nosso Provedor de Noticias Está com problemas')
-
-            } else {
-
-                console.log(response.status)
-
-            }
-
-        }
 
 
-    } catch (error) {
 
-        console.log('Erro: ', error.message)
-        
-
-    }
-
-}
 
 export let quantidArtigos = 0
 
 async function consumirDados(dados) {
 
-    quantidArtigos = await dados.articles.length >= 1 ? 1 : dados.articles.length
+    quantidArtigos = await dados.totalResults >= 1 ? 1 : dados.totalResults
 
     if(quantidArtigos == 0){
+        
         limparArtigos()
         exbirErroStatus()
+        sucessResult = false
+        test(sucessResult, 'second')
+
     } else{
+
+        sucessResult = true
         
         for (let t = 0; t <= quantidArtigos; t++) {
 
@@ -172,8 +198,9 @@ async function consumirDados(dados) {
         }
 
         exibirFrontEnd()
-
+        test(sucessResult, 'third ')
     }
 
 
 }
+
