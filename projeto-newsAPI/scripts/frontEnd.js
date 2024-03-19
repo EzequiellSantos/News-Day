@@ -1,7 +1,7 @@
 // script de toda a interação do usuário com a pagina, e exibição de informações transformadas da api para o backend da pagina
 
-import { quantidArtigos, sucessResult } from "./APIcall.js"
-import { adequedFrontEnd, artigos, busca, coletingChoices, inputsChecks, limparArtigos, limparChildren, resultado, test } from "./backEnd.js"
+import { callsSussced, definirUrls, quantidArtigos, sucessResult } from "./APIcall.js"
+import { adequedFrontEnd, artigos, busca, coletingChoices, inputsChecks, lastSearch, limparArtigos, limparChildren, resultado, test, updateLocalStorage } from "./backEnd.js"
 import { clicouProcurar, limparUserSearch, pesquisaUser } from "./index.js"
 
 
@@ -41,6 +41,8 @@ function clicou() {
 
 }
 
+let automatizarSearch = ''
+
 function ocultar(){
 
     navMenu.classList.add('desaparecer')
@@ -56,7 +58,20 @@ function ocultar(){
     navMenu.classList.remove('surgir')
 
     coletingChoices()
-    mostrarTitle()
+
+    if(callsSussced != 0){
+
+        limparArtigos()
+        automatizarSearch = navMenu.classList.contains('desaparecer') ? true : false
+        checkPesquisa()
+        definirUrls(busca, resultado)
+        
+    } else{
+
+        exibirCartaoEntrada()
+
+    }
+
 
 }
 
@@ -142,8 +157,6 @@ export function exibirFrontEnd(){
     var aside = document.createElement('aside')
     aside.setAttribute('class', 'children')
     aside.setAttribute('class', 'news-card')
-
-
     articleSub.appendChild(aside)
 
     // criando link
@@ -164,6 +177,30 @@ export function exibirFrontEnd(){
     pDescription.setAttribute('id', 'description')
     pDescription.textContent = artigos.manchetes.descricao[y]
 
+    //criando o autor
+    var pAutor = document.createElement('p')
+    pAutor.innerHTML = 'Autor: '
+    var spanAutor = document.createElement('span')
+    spanAutor.setAttribute('id', 'autor')
+    spanAutor.textContent = artigos.manchetes.autor[y]
+    pAutor.appendChild(spanAutor)
+
+    //criando o a data e fonte
+
+    var pFont = document.createElement('p')
+    pFont.innerHTML = 'Fonte: '
+
+    var spanFont = document.createElement('span')
+    spanFont.textContent = artigos.manchetes.font[y]
+    pFont.appendChild(spanFont)
+    pFont.innerHTML += '<br>Data: '
+
+    var spanDate = document.createElement('span')
+    spanDate.setAttribute('id', 'date')
+    spanDate.innerHTML = `${artigos.manchetes.data[y]}`
+    pFont.appendChild(spanDate)
+    
+
     // criando information
     var iconI = document.createElement('i')
     iconI.innerText = 'i'
@@ -178,6 +215,8 @@ export function exibirFrontEnd(){
     // colocando todas as tag como filhas do aisde subcontainer
     aside.appendChild(link)
     aside.appendChild(pDescription)
+    aside.appendChild(pAutor)
+    aside.appendChild(pFont)
     aside.appendChild(iconI)
     aside.appendChild(span)
  
@@ -205,14 +244,16 @@ export function mostrarTitle(){
       container.clear()
     }) */
 
-    if(sucessResult == false || input.value == ''){
+    if(input.value == '' && !automatizarSearch ){
 
         limparArtigos()
-        limparChildren()
         exbirErroStatus()
+        automatizarSearch = ''
         return
 
     } else{
+
+        limparArtigos()
 
         var h1 = document.createElement('h1')
         h1.setAttribute('id', 'userSearch')     
@@ -284,7 +325,7 @@ export function exibirCartaoEntrada(){
 }
 
 export function noServerConneting(){
-    text = 'Sem Noticias por enquanto'
+    text = 'Sem noticias por enquanto'
     createTitle(text)
     anexarImage()
 }

@@ -30,13 +30,14 @@ export function definirUrls(search, result) {
     }
 
 
-    limparUserSearch()
     fetch(url, {
 
         method: 'GET',
         headers: {
             'X-API-Key': apiKey
-        }
+        },
+        credentials: 'include',
+        mode: 'cors'
     
     })
     .then(response => {       
@@ -48,16 +49,13 @@ export function definirUrls(search, result) {
 
         }
 
+        sucessResult = true
         return  response.json()
     
-
-
-        
         }) 
         .then(data => {
 
             if(data.totalResults == 0){
-                sucessResult = false
                 exbirErroStatus()
                 throw new Error('Erro: sem resultados para essa pesquisa')
 
@@ -71,13 +69,11 @@ export function definirUrls(search, result) {
 
             }
 
-
-
         })
     
         .catch(error =>  {                
             
-
+            sucessResult = false
             if (error.message == 400) {
         
                 console.error('Não encontrado esse tipo de pesquisa')
@@ -166,7 +162,7 @@ async function consumirDados(dados) {
     quantidArtigos = await dados.totalResults >= 1 ? 1 : dados.totalResults
 
     if(quantidArtigos == 0){
-        
+
         limparArtigos()
         exbirErroStatus()
         sucessResult = false
@@ -174,7 +170,6 @@ async function consumirDados(dados) {
 
     } else{
 
-        sucessResult = true
         
         for (let t = 0; t <= quantidArtigos; t++) {
 
@@ -197,6 +192,7 @@ async function consumirDados(dados) {
     
         }
 
+        sucessResult = true
         exibirFrontEnd()
         test(sucessResult, 'third ')
     }

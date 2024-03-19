@@ -113,7 +113,6 @@ export function firstVisitUser() {
     adequedFrontEnd(LastChoiceSearch, LastChoiceResult)
 
   } else {
-    /* adicionar uma imagem de sem pesquisas no article SubContainer */
     exibirCartaoEntrada()
     console.log('Você não tem pesquisas recentes guardadas')
     cleanLocalStorage()
@@ -161,22 +160,20 @@ export function limparArtigos() {
 
     p.remove()
     limparChildren()
+    return console.log('limpando')
 
   } else {
 
-    console.log('parece que nao tem filhos')
+    return console.log('parece que nao tem filhos')
 
   }
 
 
 
-
-  return console.log('limpando')
-
-
 }
 
 export function limparChildren() {
+
   var childrens = document.querySelectorAll('.chidren')
 
   childrens.forEach(function (children) {
@@ -186,14 +183,18 @@ export function limparChildren() {
 }
 
 export function checklogSearchs() {
+
   if (antigoSearch != pesquisaUser) {
+
     limparArtigos()
     limparChildren()
 
     return pesquisaUser
 
   } else {
+
     return
+
   }
 }
 

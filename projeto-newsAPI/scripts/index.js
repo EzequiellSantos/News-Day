@@ -35,15 +35,17 @@ export function clicouProcurar(){
 
         
 
-    } else if(callsSussced == 0){
+    }else if(callsSussced == 0){
         // limpar os antigos artigos 
 
+        limparArtigos()
         console.clear()
         console.log('chamada feita com sucesso')
         coletingChoices() // coleta os parâmetros de pesquisa do usuário
         checkPesquisa() // fornece ao usuário os parâmetros de pesquisas
         definirUrls(busca, resultado)
         updateLocalStorage() // so caso o usuário aceitar
+        test(pesquisaUser)
 
 
     } else if(callsSussced > 0){
@@ -54,11 +56,11 @@ export function clicouProcurar(){
         checkPesquisa() // fornece ao usuário os parâmetros de pesquisas
         definirUrls( busca, resultado)
         updateLocalStorage() // so caso o usuário aceitar
+        test(pesquisaUser)
 
     }
 
 
-    limparUserSearch()
     input.value = ''
 
 /* else if(sucessResult == false){
