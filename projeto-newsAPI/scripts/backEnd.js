@@ -7,6 +7,8 @@ import { antigoSearch, articleSub, exibirCartaoEntrada, p, tittleContainer, upda
 
 export let artigos = {
    
+  // object para refatoração e evitar um código muito extenso
+
   manchetes: {
 
     url: [],
@@ -25,14 +27,12 @@ export let artigos = {
 
 // adequando o back para front
 
-export let busca = ''
-export let resultado = ''
+export let busca = '' // variavel de adaptação
+export let resultado = '' // variavel de adaptação
 
-export function adequedFrontEnd(search, results) {
+export function adequedFrontEnd(search, results) { // adaptando os parametros de busca para o front
 
-
-
-  switch (search) {
+  switch (search) { // adequação da variavel busca
     case 'checkPalavraChave':
       busca = 'Palavra-Chave'
       break
@@ -42,7 +42,7 @@ export function adequedFrontEnd(search, results) {
       break
   }
 
-  switch (results) {
+  switch (results) { // adequação da variavel resultados
     case 'checkDate':
       resultado = 'Data'
       break
@@ -61,22 +61,25 @@ export function adequedFrontEnd(search, results) {
   }
 
 
-  updatePlaceHolder(busca)
+  updatePlaceHolder(busca) // chama a função de atualizar o placeholder de acordo com o parametro de pesquisa
 
 }
 
-// coletar os critérios de busca do usuário
-export var inputsChecks = []
-export function coletingChoices() {
 
-  inputsChecks = []
+/* coletar os critérios de busca do usuário */
+
+export var inputsChecks = [] // array que armazena os inputs ativados pelo user
+
+export function coletingChoices() { // função para coletar os inputs ativados
+
+  inputsChecks = [] // limpa antes de coletar
   const inputsRadio = document.querySelectorAll('.box')
 
-  inputsRadio.forEach(input => {
+  inputsRadio.forEach(input => { // percorre em cada input do tipo radio com a classe box
 
     if (input.checked) {
 
-      inputsChecks.push(input.id)
+      inputsChecks.push(input.id) // devolve o id do input  ativado
 
     }
 
@@ -97,25 +100,26 @@ export function updateLocalStorage() {
 
 }
 
-// verificando se é a primeira visita do usuário na página
 
 export let lastSearch = localStorage.getItem('lastSearch')
 export let LastChoiceSearch = localStorage.getItem('LastChoiceSearch')
 export let LastChoiceResult = localStorage.getItem('LastChoiceResult')
-export let permissionUser = false
+export let permissionUser = false // variavel que armazena a escolha do usuário
 
-export function firstVisitUser() {
+export function firstVisitUser() {// verificando se é a primeira visita do usuário na página
 
-  if (lastSearch && LastChoiceSearch && LastChoiceResult && permissionUser) {
+  if (permissionUser) {
+
+    //adicionar verificação para chamar a api 
 
     /* ativar os inputs presentes no Busca e Resultado, e fazer uma chamada a API */
     console.log('localStorage => ', lastSearch, busca, resultado)
     adequedFrontEnd(LastChoiceSearch, LastChoiceResult)
 
   } else {
-    exibirCartaoEntrada()
+    exibirCartaoEntrada() // chama a função de resultados para primeira visita
     console.log('Você não tem pesquisas recentes guardadas')
-    cleanLocalStorage()
+    cleanLocalStorage() //limpando localStorage
   }
 
 }
@@ -130,72 +134,77 @@ export function cleanLocalStorage() {
 
 }
 
-
-//limpar os artigos e titulos
-export function limparArtigos() {
+export function limparObjectArtigos(){
 
   for (let tai in artigos.manchetes) { // limpando os artigos armazenados da ultima pesquisa
 
-    if (artigos.manchetes[tai].length != 0) {
+    if (artigos.manchetes[tai].length != 0) { //loop que percorre cada item dentro do objeto manchetes
 
-      artigos.manchetes[tai] = []
+      artigos.manchetes[tai] = [] // limpa todas as arrays presentes dentro do objeto
 
     }
 
   }
+}
 
-  var containers = document.querySelectorAll('.container')
+//limpar os artigos
+export function limparArtigos() {
 
-  if (articleSub.hasChildNodes() || tittleContainer.hasChildNodes()) {
+  var containers = document.querySelectorAll('.article-container')
 
-    containers.forEach(function (container) {
+  while(articleSub.hasChildNodes()) { //verificação se o container de noticias tem noticas dentro
+
+    containers.forEach(function (container) { //percorre cada item dentro do container
 
       var filhos = container.childNodes
 
-      filhos.forEach(function (filho) {
+      filhos.forEach(function (filho) { //remove cada filho presente
         filho.remove()
       })
 
     })
 
-    p.remove()
-    limparChildren()
-    return console.log('limpando')
+  }
 
-  } else {
+}
 
-    return console.log('parece que nao tem filhos')
+//limpando o título
+export function limparTittle() {
+
+  var title = document.querySelectorAll('.tittle-container')
+
+
+  while(tittleContainer.hasChildNodes()){
+
+    title.forEach(function(container){ // percorre cada elemento dentro do container
+
+      var filhos = container.childNodes
+
+      filhos.forEach(function(filho){ // remove cada filho presente
+        filho.remove()
+      })
+
+    })
+
+    p.remove() // remove um p que causa conflito no tittle
 
   }
 
-
-
 }
 
-export function limparChildren() {
 
-  var childrens = document.querySelectorAll('.chidren')
-
-  childrens.forEach(function (children) {
-    children.remove()
-  })
-
-}
-
-export function checklogSearchs() {
+export function checklogSearchs() { // função para verificar se a ultima pesquisa é igual a nova
 
   if (antigoSearch != pesquisaUser) {
 
-    limparArtigos()
-    limparChildren()
+    limparArtigos() // limpa os artigos presentes
+    limparTittle()// limpa o titulo presente
 
     return pesquisaUser
 
-  } else {
-
-    return
-
   }
+
+
 }
 
 // testes

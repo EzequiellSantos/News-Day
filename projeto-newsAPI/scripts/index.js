@@ -1,5 +1,5 @@
 import { checkPesquisa, errorMensage, exbirErroStatus } from "./frontEnd.js"
-import { artigos, busca, checklogSearchs, coletingChoices, firstVisitUser, limparArtigos, limparChildren, resultado, test, updateLocalStorage } from "./backEnd.js"
+import { artigos, busca, coletingChoices, firstVisitUser, limparArtigos, limparTittle, resultado, test, updateLocalStorage } from "./backEnd.js"
 import { callsSussced, definirUrls, sucessResult} from "./APIcall.js"
 
 firstVisitUser()
@@ -16,10 +16,11 @@ export function clicouProcurar(){
     pesquisaUser = valorInput
 
 
-    checklogSearchs()
+
 
     if(valorInput == ''){
 
+        limparTittle()
         limparArtigos()
         exbirErroStatus()
         console.log('error 1')
@@ -49,6 +50,7 @@ export function clicouProcurar(){
 
 
     } else if(callsSussced > 0){
+
         console.log('segunda chamada né vabagundo')
         limparArtigos()
 

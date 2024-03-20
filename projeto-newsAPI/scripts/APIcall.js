@@ -1,5 +1,5 @@
-import { errorMensage, exbirErroStatus, exibirFrontEnd, noServerConneting, tooManyCalls } from "./frontEnd.js"
-import { artigos, limparArtigos, test } from "./backEnd.js"
+import { articleSub, checkPesquisa, errorMensage, exbirErroStatus, exibirFrontEnd, mostrarTitle, noServerConneting, tittleContainer, tooManyCalls } from "./frontEnd.js"
+import { artigos, limparArtigos, limparObjectArtigos, limparTittle, test } from "./backEnd.js"
 import { limparUserSearch, pesquisaUser } from "./index.js"
 
 //script de todo o código de consumo da API (trasnformações de url, seleção dos dados e status da chamadas)
@@ -17,7 +17,7 @@ const apiKey = '8164a1687d9e4d80a5901e71edaf039c'
 
 var url = ''
 
-export function definirUrls(search, result) {
+export function definirUrls(search, result) { // função para adequar as url de acordo com a chamada do usuário
 
     if (search == 'Palavra-Chave') {
 
@@ -32,7 +32,6 @@ export function definirUrls(search, result) {
 
     fetch(url, {
 
-        method: 'GET',
         headers: {
             'X-API-Key': apiKey
         },
@@ -40,7 +39,7 @@ export function definirUrls(search, result) {
     })
     .then(response => {       
     
-        if(!response.ok){
+        if(!response.ok){ // caso o servidor resonder com erro
 
             sucessResult = false
             throw new Error(response.status)
@@ -53,23 +52,24 @@ export function definirUrls(search, result) {
         }) 
         .then(data => {
 
-            if(data.totalResults == 0){
+            if(data.totalResults == 0){ // se não tiver resultados
+
                 exbirErroStatus()
                 throw new Error('Erro: sem resultados para essa pesquisa')
 
             } else{
 
                 sucessResult = true
-                consumirDados(data) 
+                consumirDados(data) //manda os dados para fatorá-los
                 console.log(data)
     
-                callsSussced += 1
+                callsSussced += 1 //retorna para as verificações que ja foram feitas chamadas de api
 
             }
 
         })
     
-        .catch(error =>  {                
+        .catch(error =>  { // chamada de erros   
             
             sucessResult = false
             if (error.message == 400) {
@@ -97,7 +97,7 @@ export function definirUrls(search, result) {
 
 }
 
-function adequedUrlKeyWord(userSearch, result) {
+function adequedUrlKeyWord(userSearch, result) { // adequa as urls de acordo com o criterio de palavra-chave
 
     if (result == 'Data') {
 
@@ -121,7 +121,7 @@ function adequedUrlKeyWord(userSearch, result) {
 
 }
 
-function adequarUrlDomain(userSearch, result) {
+function adequarUrlDomain(userSearch, result) { // adequa as urls de chamada de acordo com o critério de dominio
 
     if (result == "Data") {
 
@@ -146,54 +146,38 @@ function adequarUrlDomain(userSearch, result) {
 }
 
 export let sucessResult = null 
-export let callsSussced = 0
-
-
-
-
-
-export let quantidArtigos = 0
+export let callsSussced = 0 // verificação para saber quntas pesquisas ja foram feitas
+export let quantidArtigos = 0 // verificando a quantidade de arquivos presentes
 
 async function consumirDados(dados) {
 
-    quantidArtigos = await dados.totalResults >= 1 ? 1 : dados.totalResults
-
-    if(quantidArtigos == 0){
-
-        limparArtigos()
-        exbirErroStatus()
-        sucessResult = false
-        test(sucessResult, 'second')
-
-    } else{
-
+    quantidArtigos = await dados.totalResults >= 5 ? 5 : dados.totalResults
         
-        for (let t = 0; t <= quantidArtigos; t++) {
+    limparObjectArtigos() // limpa o object de refatoração
+    limparArtigos() // limpa os os artigos presentels
 
 
-            artigos.manchetes.autor.push(dados.articles[t].author)
-    
-            artigos.manchetes.url.push(dados.articles[t].url)
-    
-            artigos.manchetes.urlImage.push(dados.articles[t].urlToImage)
-    
-            artigos.manchetes.font.push(dados.articles[t].source.name)
-    
-            artigos.manchetes.titulo.push(dados.articles[t].title)
-    
-            artigos.manchetes.descricao.push(dados.articles[t].description)
-    
-            artigos.manchetes.texto.push(dados.articles[t].content)
-    
-            artigos.manchetes.data.push(dados.articles[t].publishedAt)
-    
-        }
+    for (let t = 0; t <= quantidArtigos; t++) {
 
-        sucessResult = true
-        exibirFrontEnd()
-        test(sucessResult, 'third ')
+        artigos.manchetes.autor.push(dados.articles[t].author)
+
+        artigos.manchetes.url.push(dados.articles[t].url)
+
+        artigos.manchetes.urlImage.push(dados.articles[t].urlToImage)
+
+        artigos.manchetes.font.push(dados.articles[t].source.name)
+
+        artigos.manchetes.titulo.push(dados.articles[t].title)
+
+        artigos.manchetes.descricao.push(dados.articles[t].description)
+
+        artigos.manchetes.texto.push(dados.articles[t].content)
+
+        artigos.manchetes.data.push(dados.articles[t].publishedAt)
+
     }
 
+    sucessResult = true
+    exibirFrontEnd() // exibe os dados presentes no objeto artigos
 
 }
-

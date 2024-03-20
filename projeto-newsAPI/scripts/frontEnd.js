@@ -1,7 +1,7 @@
 // script de toda a interação do usuário com a pagina, e exibição de informações transformadas da api para o backend da pagina
 
 import { callsSussced, definirUrls, quantidArtigos, sucessResult } from "./APIcall.js"
-import { adequedFrontEnd, artigos, busca, coletingChoices, inputsChecks, lastSearch, limparArtigos, limparChildren, resultado, test, updateLocalStorage } from "./backEnd.js"
+import { adequedFrontEnd, artigos, busca, coletingChoices, inputsChecks, lastSearch, limparArtigos, limparTittle, limparObjectArtigos, resultado, test, updateLocalStorage, firstVisitUser } from "./backEnd.js"
 import { clicouProcurar, limparUserSearch, pesquisaUser } from "./index.js"
 
 
@@ -28,7 +28,7 @@ var navMenu = document.getElementById('newsMenu')
 iconX.addEventListener('click', ocultar)
 iconHambug.addEventListener('click', clicou)
 
-function clicou() {
+function clicou() { // fução de aparecer o menu
 
     navMenu.classList.remove('desaparecer')
     navMenu.classList.add('surgir')
@@ -41,9 +41,9 @@ function clicou() {
 
 }
 
-let automatizarSearch = ''
+let automatizarSearch = '' // variável para saber se o user mudou os parâmetros com uma pesquisa ja feita
 
-function ocultar(){
+function ocultar(){ // função de ocultar menu
 
     navMenu.classList.add('desaparecer')
     
@@ -61,14 +61,15 @@ function ocultar(){
 
     if(callsSussced != 0){
 
-        limparArtigos()
+        limparArtigos() //limap os artigos
+        limparTittle() // limpa os titulos
         automatizarSearch = navMenu.classList.contains('desaparecer') ? true : false
         checkPesquisa()
         definirUrls(busca, resultado)
         
     } else{
 
-        exibirCartaoEntrada()
+        firstVisitUser() // chama a função de primeira visita
 
     }
 
@@ -76,8 +77,10 @@ function ocultar(){
 }
 
 lastViewPort.addEventListener('click', function(){ // clicando fora do menu ativo
+
     ocultar() // recolher menu
     coletingChoices() // coletar escolha do usuário para pesquisa
+
 })
 
 var ulForSearch = document.querySelector('#forSearch')
@@ -86,7 +89,7 @@ var ulForCredits = document.querySelector('#credits')
 
 /* 
 
-document.getElementById('menuSide').addEventListener('click', function(event){
+document.getElementById('menuSide').addEventListener('click', function(event){ exibir id do item clicado
 
     if(event.target.matches('li')){
 
@@ -98,32 +101,32 @@ document.getElementById('menuSide').addEventListener('click', function(event){
 })
 
 */
-ulForCredits.addEventListener('click', function(){
+ulForCredits.addEventListener('click', function(){ // função para definir qual ul foi clicada
 
     menuControl(ulForCredits)
 
 })
 
-ulForResult.addEventListener('click', function(){
+ulForResult.addEventListener('click', function(){ // função para definir qual ul foi clicada
 
     menuControl(ulForResult)
 
 })
-ulForSearch.addEventListener('click', function(){
+
+ulForSearch.addEventListener('click', function(){ // função para definir qual ul foi clicada
 
     menuControl(ulForSearch)
 
 })
 
 let ul = ''
-function menuControl(list){
+function menuControl(list){ // pega a ul clicada e aplica ou retira as classes de exibição
 
     ul = list
 
     if(ul.classList.contains('exibirSub')){
 
         ul.classList.remove('exibirSub')
-
 
     } else{
 
@@ -133,7 +136,9 @@ function menuControl(list){
 
 }
 
-export function updatePlaceHolder(valor){// front-end
+export function updatePlaceHolder(valor){
+
+    // front-end, atualiza o place-holder com base no parametro de busca escolhido
 
     if(valor == 'Palavra-Chave'){
   
@@ -147,17 +152,13 @@ export function updatePlaceHolder(valor){// front-end
   
 }
 
-export var articleSub = document.getElementById('articleSubcontainer')
 
-export function exibirFrontEnd(){  
+export var articleSub = document.getElementById('articleSubcontainer') //container de noticias
+
+export function exibirFrontEnd(){  // função para exibir os artigos das noticias
 
   for(let y = 0 ; y <= quantidArtigos ; y++){
 
-    // criando a tag container do card de noticias
-    var aside = document.createElement('aside')
-    aside.setAttribute('class', 'children')
-    aside.setAttribute('class', 'news-card')
-    articleSub.appendChild(aside)
 
     // criando link
     var link =  document.createElement('a')
@@ -213,12 +214,17 @@ export function exibirFrontEnd(){
 
 
     // colocando todas as tag como filhas do aisde subcontainer
+    var aside = document.createElement('aside')
+    aside.setAttribute('class', 'news-card')
+    aside.setAttribute('class', 'news-card')
+
     aside.appendChild(link)
     aside.appendChild(pDescription)
     aside.appendChild(pAutor)
     aside.appendChild(pFont)
     aside.appendChild(iconI)
     aside.appendChild(span)
+    articleSub.appendChild(aside) // criando a tag container do card de noticias
  
   }
 
@@ -236,29 +242,40 @@ export let antigoSearch = ''
 
 export var p = document.createElement('p')
 
-export function mostrarTitle(){
+export function mostrarTitle(){ 
 
-    /*   if(tittleContainer.hasChildNodes() == true){ */
+    // função para exibir dados da pesquisa - pesquisa do usuário e seus parâmetros de escolha
+
+    /*
+    
+    if(tittleContainer.hasChildNodes() == true){ 
   
-    /* tittleContainer.forEach(function(container) {
-      container.clear()
-    }) */
+        tittleContainer.forEach(function(container) {
+        container.clear()
+    })
 
-    if(input.value == '' && !automatizarSearch ){
+    */
+
+    limparTittle()
+
+    if(input.value == '' && !automatizarSearch ){ 
+
+        /* 
+        caso o usuário mudou parametros antes de realizar pesquisa, ou
+        realizou uma pesquisa sem nenhum valor
+        */
 
         limparArtigos()
         exbirErroStatus()
         automatizarSearch = ''
         return
 
-    } else{
-
-        limparArtigos()
+    } else{ // exibe os dados com de pesquisa
 
         var h1 = document.createElement('h1')
         h1.setAttribute('id', 'userSearch')     
         h1.setAttribute('class', 'children')
-        h1.innerHTML = `Resultados com `
+        h1.innerText = `Resultados com `
         
         var search = document.createElement('span')
         search.setAttribute('id', 'search')
@@ -268,8 +285,10 @@ export function mostrarTitle(){
         h1.appendChild(search)
       
 
+        /* adequar as classes do titulo, para serem apagas quando a função de limpar tittle for chamada */
+
         p.setAttribute('id', 'userChoice')
-        p.setAttribute('class', 'container')
+        p.setAttribute('class', 'children')
         p.innerHTML = `Exibindo resultados com base em <br>`
 
         var markSearch = document.createElement('mark')
@@ -297,9 +316,9 @@ export function mostrarTitle(){
   
 }
 
-export let errorMensage = false
+// funções para mostrar no titulo a  mensagem de erro
 
-export function exbirErroStatus(){
+export function exbirErroStatus(){  
 
     text = 'Ops... Não há resultados'
 
@@ -325,13 +344,15 @@ export function exibirCartaoEntrada(){
 }
 
 export function noServerConneting(){
+
     text = 'Sem noticias por enquanto'
     createTitle(text)
     anexarImage()
+
 }
 
 
-function anexarImage(){
+function anexarImage(){ // função para anexar o fantasminha
 
     var img = document.createElement('img')
     img.setAttribute('id', 'imgResponse')
@@ -340,10 +361,13 @@ function anexarImage(){
 
 }
 
-let text = ''
+let text = '' // variavel facilitar a mudança de texto
+export let errorMensage = false // variavel de verificação de erro presente
 function createTitle(text){
 
-    limparArtigos()
+    //criando a resposta de erro
+
+    limparTittle()
     errorMensage = true
     var status = document.createElement('h1')
     status.setAttribute('id', 'statusId')
