@@ -36,8 +36,6 @@ export function definirUrls(search, result) {
         headers: {
             'X-API-Key': apiKey
         },
-        credentials: 'include',
-        mode: 'cors'
     
     })
     .then(response => {       
@@ -91,7 +89,6 @@ export function definirUrls(search, result) {
 
             } else {
 
-                console.log(error.status)
                 console.error('Erro: ', error.status)
 
             }

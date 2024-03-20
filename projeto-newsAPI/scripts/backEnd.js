@@ -1,12 +1,12 @@
 import { limparUserSearch, pesquisaUser } from "./index.js"
-import { } from "./APIcall.js"
+import {} from "./APIcall.js"
 import { antigoSearch, articleSub, exibirCartaoEntrada, p, tittleContainer, updatePlaceHolder } from "./frontEnd.js"
 
 // sript da junção dos dados da api e preparação das informações para exibir na api
 
 
 export let artigos = {
-
+   
   manchetes: {
 
     url: [],

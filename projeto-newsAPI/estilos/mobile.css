@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Ruluko&display=swap');
+
+
 :root{
 
     /* Cores bases */
@@ -13,6 +17,8 @@
     --color-dark00:#7f8a92;
     --color-dark01: #343a46; 
     --color-dark02: #181b22; 
+
+    --font-UI: "Noto Sans", sans-serif;
 
 }
 
@@ -171,6 +177,7 @@ ul{
 
 li{
     list-style: none;
+    font-family: var(--font-UI);
     grid-column: 1/5;
 }
 
@@ -378,6 +385,10 @@ aside.news-card{
     font-size: 0.9em;
 }
 
+#titleNews, #description{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 #author{
     text-transform: capitalize;
 }
@@ -392,6 +403,11 @@ aside.news-card{
 #information:hover{
     background-color: var(--color-light01);
     transition: all 0.2s ease-in;
+}
+
+#statusId{
+    margin-top: 30px;
+    font-family: var(--font-UI);
 }
 
 #mensage{
