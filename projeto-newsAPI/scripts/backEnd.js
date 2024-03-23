@@ -1,6 +1,6 @@
-import { limparUserSearch, pesquisaUser } from "./index.js"
-import {} from "./APIcall.js"
-import { antigoSearch, articleSub, exibirCartaoEntrada, p, tittleContainer, updatePlaceHolder } from "./frontEnd.js"
+import { limparUserSearch, pesquisaUser, valorInput } from "./index.js"
+import { definirUrls } from "./APIcall.js"
+import { antigoSearch, articleSub, choicePermission, exibirCartaoEntrada, exibirNotificationPermission, firstSearch, p, permissionUser, tittleContainer, updatePlaceHolder } from "./frontEnd.js"
 
 // sript da junção dos dados da api e preparação das informações para exibir na api
 
@@ -69,11 +69,12 @@ export function adequedFrontEnd(search, results) { // adaptando os parametros de
 /* coletar os critérios de busca do usuário */
 
 export var inputsChecks = [] // array que armazena os inputs ativados pelo user
+export const inputsRadio = document.querySelectorAll('.box')
 
 export function coletingChoices() { // função para coletar os inputs ativados
 
   inputsChecks = [] // limpa antes de coletar
-  const inputsRadio = document.querySelectorAll('.box')
+
 
   inputsRadio.forEach(input => { // percorre em cada input do tipo radio com a classe box
 
@@ -104,23 +105,107 @@ export function updateLocalStorage() {
 export let lastSearch = localStorage.getItem('lastSearch')
 export let LastChoiceSearch = localStorage.getItem('LastChoiceSearch')
 export let LastChoiceResult = localStorage.getItem('LastChoiceResult')
-export let permissionUser = false // variavel que armazena a escolha do usuário
+export let lastPermission = localStorage.getItem('permission')
+
 
 export function firstVisitUser() {// verificando se é a primeira visita do usuário na página
 
-  if (permissionUser) {
+  if (lastPermission != 'true') {// se a escolha do usuário for cancelar, ele vai mostrar toda vez a pergunta
+
+    exibirNotificationPermission()
+    console.log(lastPermission);
+
+  } else{
+
+    //verificar se é a primeira chamada dele, ou se ele ja teve chamadas antes
+    addCheckedInput()
+
+    if(lastSearch != true){
+
+      firstSearch()
+
+    }else{
+
+      console.log('localStorage => ', lastSearch, busca, resultado)
+      console.log('chamarAPI')
+
+    }
+
+
+  }
+
+}
+
+export function verificationForOtimization(){// verificação para saber se o usuário aceitou ou não
+
+  if (permissionUser != 'false') {
 
     //adicionar verificação para chamar a api 
 
     /* ativar os inputs presentes no Busca e Resultado, e fazer uma chamada a API */
-    console.log('localStorage => ', lastSearch, busca, resultado)
-    adequedFrontEnd(LastChoiceSearch, LastChoiceResult)
+    localStorage.setItem('permission', permissionUser)
+    adequedFrontEnd(LastChoiceSearch, LastChoiceResult) 
+    input.value = lastSearch
+    definirUrls(busca, resultado)
 
   } else {
+
+    localStorage.setItem('permission', permissionUser)
+    limparArtigos()
     exibirCartaoEntrada() // chama a função de resultados para primeira visita
     console.log('Você não tem pesquisas recentes guardadas')
-    cleanLocalStorage() //limpando localStorage
+
+
   }
+
+}
+
+const inputsRadioSearch = document.querySelectorAll('input[name="search"]')
+const inputsRadioResult = document.querySelectorAll('input[name="result"]')
+
+function addCheckedInput(){
+
+  inputsRadioSearch.forEach(function(input){
+
+  
+    //if()
+    var i = document.getElementById(`${LastChoiceSearch == 'checkPalavraChave' ? 'checkPalavraChave' : 'checkDominio'}`)
+
+    if(checkPalavraChave.checked){
+      console.log(i)
+    }
+
+
+    var n = document.getElementById(`${LastChoiceSearch == 'checkDominio' ? 'checkPalavraChave' : 'checkDominio'}`)
+
+    if(n.checked){
+      console.log(n)
+    }
+
+
+    
+    updatePlaceHolder(LastChoiceSearch)
+
+    /* if(input.id == LastChoiceResult){
+
+
+      i.checked = true
+
+    }else{
+
+      i.checked = false
+
+    } */
+
+    console.log(input)
+    //if(localStorage.getItem('lastSearch') == inputsRadioSearch[e].id)
+
+  })
+
+  inputsRadioResult.forEach(function(inputs){
+    console.log(inputs)
+  })
+
 
 }
 
@@ -130,6 +215,7 @@ export function cleanLocalStorage() {
   localStorage.removeItem('lastSearch')
   localStorage.removeItem('LastChoiceSearch')
   localStorage.removeItem('LastChoiceResult')
+  localStorage.removeItem('permission')
 
 
 }

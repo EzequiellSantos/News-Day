@@ -1,7 +1,7 @@
 // script de toda a interação do usuário com a pagina, e exibição de informações transformadas da api para o backend da pagina
 
 import { callsSussced, definirUrls, quantidArtigos, sucessResult } from "./APIcall.js"
-import { adequedFrontEnd, artigos, busca, coletingChoices, inputsChecks, lastSearch, limparArtigos, limparTittle, limparObjectArtigos, resultado, test, updateLocalStorage, firstVisitUser } from "./backEnd.js"
+import { adequedFrontEnd, artigos, busca, coletingChoices, inputsChecks, lastSearch, limparArtigos, limparTittle, limparObjectArtigos, resultado, test, updateLocalStorage, firstVisitUser, verificationForOtimization } from "./backEnd.js"
 import { clicouProcurar, limparUserSearch, pesquisaUser } from "./index.js"
 
 
@@ -61,6 +61,7 @@ function ocultar(){ // função de ocultar menu
 
     if(callsSussced != 0){
 
+        limparObjectArtigos()
         limparArtigos() //limap os artigos
         limparTittle() // limpa os titulos
         automatizarSearch = navMenu.classList.contains('desaparecer') ? true : false
@@ -69,7 +70,8 @@ function ocultar(){ // função de ocultar menu
         
     } else{
 
-        firstVisitUser() // chama a função de primeira visita
+/*         firstVisitUser() // chama a função de primeira visita */
+        definirUrls()
 
     }
 
@@ -166,17 +168,25 @@ export function exibirFrontEnd(){  // função para exibir os artigos das notici
     link.rel = 'noopener noreferrer'
     link.href = artigos.manchetes.url[y]
 
+
+
     // criando titulo
     var tittleNews = document.createElement('h2')
     tittleNews.setAttribute('id', 'tittleNews')
     tittleNews.textContent = artigos.manchetes.titulo[y]
 
-    link.appendChild(tittleNews)
+    link.appendChild(tittleNews) 
 
     //criando descrição
     var pDescription = document.createElement('p')
     pDescription.setAttribute('id', 'description')
     pDescription.textContent = artigos.manchetes.descricao[y]
+
+    link.appendChild(pDescription)
+    var sectionImg = document.createElement('section')
+    sectionImg.setAttribute('id', 'img')
+    sectionImg.appendChild(link)
+    sectionImg.style.backgroundImage = `url('${artigos.manchetes.urlImage[y]}')`
 
     //criando o autor
     var pAutor = document.createElement('p')
@@ -216,9 +226,9 @@ export function exibirFrontEnd(){  // função para exibir os artigos das notici
     // colocando todas as tag como filhas do aisde subcontainer
     var aside = document.createElement('aside')
     aside.setAttribute('class', 'news-card')
-    aside.setAttribute('class', 'news-card')
 
-    aside.appendChild(link)
+
+    aside.appendChild(sectionImg)
     aside.appendChild(pDescription)
     aside.appendChild(pAutor)
     aside.appendChild(pFont)
@@ -351,6 +361,12 @@ export function noServerConneting(){
 
 }
 
+export function firstSearch(){
+    text = 'Faça uma pesquisa primeiramente'
+    createTitle(text)
+    anexarImage()
+}
+
 
 function anexarImage(){ // função para anexar o fantasminha
 
@@ -374,5 +390,60 @@ function createTitle(text){
     status.textContent = text
     tittleContainer.appendChild(status)
     text = ''
+
+}
+
+var noticationBody = document.querySelector('#notificationBody')
+export var choicePermission = ''
+export var permissionUser = '' // variavel que armazena a escolha do usuário
+
+export function exibirNotificationPermission(){
+
+    var secTextNotificxation = document.createElement('section')
+    secTextNotificxation.setAttribute('id', 'TextNotification')
+
+    var p = document.createElement('p')
+    p.textContent = 'Você concorda que eu guarde suas últimas pesquisas realizadas?'
+
+    secTextNotificxation.appendChild(p)
+
+    var secButtons = document.createElement('section')
+    secButtons.setAttribute('id', 'buttons')
+
+    var inputCancel = document.createElement('input')
+    inputCancel.setAttribute('type', 'button')
+    inputCancel.setAttribute('value', 'Cancelar')
+    inputCancel.setAttribute('id', 'cancelButton')
+
+    var inputAcept = document.createElement('input')
+    inputAcept.setAttribute('type', 'button')
+    inputAcept.setAttribute('value', 'Aceito')
+    inputAcept.setAttribute('id', 'aceptButton')
+
+
+    secButtons.appendChild(inputCancel)
+    secButtons.appendChild(inputAcept)
+    noticationBody.appendChild(secTextNotificxation)
+    noticationBody.appendChild(secButtons)
+    notification.style.display = 'block'
+
+
+    
+    inputAcept.addEventListener('click', function(){
+        choicePermission = 'true'
+        permissionUser = choicePermission
+        notification.style.display = 'none'
+        verificationForOtimization()
+        return 
+    })
+
+    inputCancel.addEventListener('click', function(){
+        choicePermission = 'false'
+        permissionUser = choicePermission
+        notification.style.display = 'none'
+        verificationForOtimization()
+        return 
+    })
+
 
 }
