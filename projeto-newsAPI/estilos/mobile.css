@@ -81,7 +81,6 @@ menu#menuSide{
     width: 30vw;
     top: 0;
     right: 0;
-    max-width: 900px;
     height: 100vh;
 
     background-color: #6e6e6e3b;
@@ -196,9 +195,18 @@ li{
 
 li.sub{
     padding-left: 40px;
-    margin: 10px 0px 10px 22px;
+    margin: 10px 0px 10px 30px;
     font-size: 1.3em;
     display: none;
+}
+
+.sub > a{
+    text-decoration: none;
+    color: #000;
+}
+
+.sub > a:hover{
+    text-decoration: underline;
 }
 
 
@@ -222,7 +230,7 @@ input.box{
 .checkbox{
     grid-column: 2/2;
     display: none;
-    margin-bottom: -40px ;
+    margin-bottom: -50px ;
     
     width: 10px;
     height: 10px;
@@ -246,7 +254,7 @@ input#checkPopularity:checked ~ #checkboxPP{
     border-width: 2px;
     border-radius: 0px;
     width: 5px;
-    margin-bottom: -30px ;
+    margin-bottom: -40px ;
     transition: all 0.375s ease;
 }
 
@@ -332,7 +340,6 @@ aside#titleSearch{
 }
 
 #userChoice{
-
     line-height: 2em;
     font-size: 0.8em;
     max-width: 80%;
@@ -355,12 +362,11 @@ article#articleSubcontainer{
     align-items: center;
     justify-content: center;
     gap: 25px;
-
 }
 
 aside.news-card{
     width: 90%;
-    max-width: 330px;
+    max-width: 340px;
     height: auto;
     background-color: var(--color-lightX);
 
@@ -373,7 +379,6 @@ aside.news-card{
 
 .news-card a{
     color: #000;
-    text-decoration: none;
 }
 
 #titleNews{
@@ -387,6 +392,34 @@ aside.news-card{
 
 #titleNews, #description{
     font-family: Arial, Helvetica, sans-serif;
+}
+
+#img{
+    background-image: url('');
+    background-position: center;
+    background-attachment: local;
+    background-repeat: no-repeat;
+    background-size: cover; 
+    min-height: 200px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 20px;
+    padding: 5px;
+    margin-bottom: 15px;
+}
+
+#img > a > h2{
+    background-color: #3f3f3f8c;
+    color: #fff;
+    text-decoration: underline #fff;
+
+    padding: 10px;
+    border-radius: 17px;
+    line-height: 1.45em;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 #author{
@@ -426,4 +459,99 @@ aside.news-card{
 i#information:hover ~ span#mensage{
     display: block;
     transition: all 0.4s ease-in;
+}
+
+div#notification{
+    display: none;
+    position: absolute;
+    bottom: 15px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    font-family: var(--font-UI);
+
+    width: calc(100% - 50px);
+    max-width: 600px;
+    margin: auto;
+
+    background-color: var(--color-light01);
+    padding: 15px;
+    border-radius: 15px;
+    font-size: 1.2em;
+
+    animation: fad-in 6s linear;
+}
+
+section#textNotification{
+    width: 98%;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: justify;
+}
+
+section#textNotification > p{
+    width: 100%;
+}
+
+section#buttons{
+    margin: 15px 0;
+    text-align: right;
+}
+
+section#buttons > input{
+    font-size: 0.8em;
+    padding: 10px;
+    margin-left: 7px;
+    border-radius: 7px;
+    outline: 0;
+    border: 0;
+}
+
+#buttons > input:active{
+    opacity: 0.8;
+}
+
+#aceptButton{
+    background-color: #33acfd;
+}
+
+#cancelButton{
+    background-color: rgb(241, 241, 241);
+}
+
+#progressBar{
+    position: absolute;
+    left: 4px;
+    bottom: 4px;
+    width: calc(100% - 10px);
+    height: 3px;
+    transform: scaleX(0);
+    transform-origin: left;
+    background-image: linear-gradient(
+        to right,
+        var(--color-light01),
+        var(--color-light02)
+    );
+    border-radius: inherit;
+    animation: progress 5.5s 0.3s linear ;
+}
+
+@keyframes fad-in {
+    5%{
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    95%{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes progress {
+    to{
+        transform: scaleX(1);
+    }
 }
