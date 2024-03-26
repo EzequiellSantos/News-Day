@@ -411,8 +411,8 @@ export var permissionUser = '' // variavel que armazena a escolha do usuário
 export function createContainNotification(text, container){
 
 
-    var noticationBody = document.createElement('div')
-    noticationBody.setAttribute('id', 'notificationBody')
+    var notificationBody = document.createElement('div')
+    notificationBody.setAttribute('id', 'notificationBody')
 
     while(notification.hasChildNodes()){
 
@@ -446,9 +446,9 @@ export function createContainNotification(text, container){
     progress.setAttribute('id', 'progressBar')
 
     //colocando as duas sections como filho
-    noticationBody.appendChild(secTextNotification)
-    noticationBody.appendChild(secContainerExt)
-    notification.appendChild(noticationBody)
+    notificationBody.appendChild(secTextNotification)
+    notificationBody.appendChild(secContainerExt)
+    notification.appendChild(notificationBody)
     notification.appendChild(progress)
 
     notification.style.display = 'block'
