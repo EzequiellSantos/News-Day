@@ -474,10 +474,11 @@ div#notification{
     max-width: 600px;
     margin: auto;
 
-    background-color: var(--color-light01);
+    background-color: var(--color-lightX);
     padding: 15px;
     border-radius: 15px;
     font-size: 1.2em;
+    z-index: 5;
 
     animation: fad-in 6s linear;
 }
@@ -494,12 +495,12 @@ section#textNotification > p{
     width: 100%;
 }
 
-section#buttons{
+section#extra{
     margin: 15px 0;
     text-align: right;
 }
 
-section#buttons > input{
+#aceptButton, #cancelButton{
     font-size: 0.8em;
     padding: 10px;
     margin-left: 7px;
@@ -508,7 +509,7 @@ section#buttons > input{
     border: 0;
 }
 
-#buttons > input:active{
+#aceptButton:active, #cancelButton:active{
     opacity: 0.8;
 }
 
@@ -530,8 +531,8 @@ section#buttons > input{
     transform-origin: left;
     background-image: linear-gradient(
         to right,
-        var(--color-light01),
-        var(--color-light02)
+        var(--color-light00),
+        var(--color-light01)
     );
     border-radius: inherit;
     animation: progress 5.5s 0.3s linear ;
@@ -554,4 +555,11 @@ section#buttons > input{
     to{
         transform: scaleX(1);
     }
+}
+
+#imgOk{
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

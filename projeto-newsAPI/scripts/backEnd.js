@@ -1,6 +1,6 @@
 import { limparUserSearch, pesquisaUser, valorInput } from "./index.js"
 import { definirUrls } from "./APIcall.js"
-import { antigoSearch, articleSub, choicePermission, exibirCartaoEntrada, exibirNotificationPermission, firstSearch, p, permissionUser, tittleContainer, updatePlaceHolder } from "./frontEnd.js"
+import { antigoSearch, articleSub, choicePermission, clicou, exibirCartaoEntrada, exibirNotificationCleared, exibirNotificationPermission, firstSearch, p, permissionUser, tittleContainer, updatePlaceHolder } from "./frontEnd.js"
 
 // sript da junção dos dados da api e preparação das informações para exibir na api
 
@@ -209,13 +209,19 @@ function addCheckedInput(){
 
 }
 
+clearLocal.addEventListener('click', function(){
+  cleanLocalStorage()
+})
+
 // limpar o local storage
-export function cleanLocalStorage() {
+export async function cleanLocalStorage() {
 
   localStorage.removeItem('lastSearch')
   localStorage.removeItem('LastChoiceSearch')
   localStorage.removeItem('LastChoiceResult')
   localStorage.removeItem('permission')
+  exibirNotificationCleared()
+  console.log('limpou')
 
 
 }

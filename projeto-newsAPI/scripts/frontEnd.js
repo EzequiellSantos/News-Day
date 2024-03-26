@@ -28,7 +28,7 @@ var navMenu = document.getElementById('newsMenu')
 iconX.addEventListener('click', ocultar)
 iconHambug.addEventListener('click', clicou)
 
-function clicou() { // fução de aparecer o menu
+export function clicou() { // fução de aparecer o menu
 
     navMenu.classList.remove('desaparecer')
     navMenu.classList.add('surgir')
@@ -88,6 +88,7 @@ lastViewPort.addEventListener('click', function(){ // clicando fora do menu ativ
 var ulForSearch = document.querySelector('#forSearch')
 var ulForResult = document.querySelector('#forResult')
 var ulForCredits = document.querySelector('#credits')
+var ulForClear = document.querySelector('#clear')
 
 /* 
 
@@ -103,6 +104,12 @@ document.getElementById('menuSide').addEventListener('click', function(event){ e
 })
 
 */
+ulForClear.addEventListener('click', function(){
+
+    menuControl(ulForClear)
+
+})
+
 ulForCredits.addEventListener('click', function(){ // função para definir qual ul foi clicada
 
     menuControl(ulForCredits)
@@ -393,29 +400,80 @@ function createTitle(text){
 
 }
 
-var noticationBody = document.querySelector('#notificationBody')
+var notification = document.getElementById('notification')
+var containerNotification = document.querySelectorAll('.containerNotification')
 export var choicePermission = ''
 export var permissionUser = '' // variavel que armazena a escolha do usuário
 
+
+
+
+export function createContainNotification(text, container){
+
+
+    var noticationBody = document.createElement('div')
+    noticationBody.setAttribute('id', 'notificationBody')
+
+    while(notification.hasChildNodes()){
+
+        containerNotification.forEach(function (container){
+            var filhos = container.childNodes
+
+            filhos.forEach(function (filho){
+                filho.remove()
+            })
+        })
+    }
+
+
+    
+    // criação da section de descrição
+    const secTextNotification = document.createElement('section')
+    secTextNotification.setAttribute('id', 'TextNotification')
+
+    const pText = document.createElement('p')
+    pText.textContent = text
+
+    secTextNotification.appendChild(pText)
+
+    // criação da section de inputs ou imgs
+    const secContainerExt = document.createElement('section')
+    secContainerExt.setAttribute("id", 'extra')
+    secContainerExt.appendChild(container)
+
+    //criar barra de progresso
+    const progress = document.createElement('div')
+    progress.setAttribute('id', 'progressBar')
+
+    //colocando as duas sections como filho
+    noticationBody.appendChild(secTextNotification)
+    noticationBody.appendChild(secContainerExt)
+    notification.appendChild(noticationBody)
+    notification.appendChild(progress)
+
+    notification.style.display = 'block'
+
+}
+
 export function exibirNotificationPermission(){
 
-    var secTextNotificxation = document.createElement('section')
-    secTextNotificxation.setAttribute('id', 'TextNotification')
+ 
+    //criar o texto
+    let text = 'Você concorda que eu guarde suas últimas pesquisas realizadas?'
 
-    var p = document.createElement('p')
-    p.textContent = 'Você concorda que eu guarde suas últimas pesquisas realizadas?'
 
-    secTextNotificxation.appendChild(p)
-
-    var secButtons = document.createElement('section')
+    //criar section para organizar os botões
+    const secButtons = document.createElement('section')
     secButtons.setAttribute('id', 'buttons')
 
-    var inputCancel = document.createElement('input')
+    //criar input para cancelar
+    const inputCancel = document.createElement('input')
     inputCancel.setAttribute('type', 'button')
     inputCancel.setAttribute('value', 'Cancelar')
     inputCancel.setAttribute('id', 'cancelButton')
 
-    var inputAcept = document.createElement('input')
+    //criar input do para aceitar
+    const inputAcept = document.createElement('input')
     inputAcept.setAttribute('type', 'button')
     inputAcept.setAttribute('value', 'Aceito')
     inputAcept.setAttribute('id', 'aceptButton')
@@ -423,9 +481,9 @@ export function exibirNotificationPermission(){
 
     secButtons.appendChild(inputCancel)
     secButtons.appendChild(inputAcept)
-    noticationBody.appendChild(secTextNotificxation)
-    noticationBody.appendChild(secButtons)
+    createContainNotification(text, secButtons)
     notification.style.display = 'block'
+
 
 
     
@@ -446,4 +504,22 @@ export function exibirNotificationPermission(){
     })
 
 
+
+
+}
+
+export function exibirNotificationCleared(){
+    let text = 'Seus dados foram limpados com Sucesso'
+
+    const notificationOk = document.createElement('section')
+    notificationOk.setAttribute('id', 'imgOk')
+
+    const imgOk = document.createElement('img')
+    imgOk.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAC60lEQVR4nO2Zz2tTQRDHH/46ePTHyR//hFjsKTcp7MrOOzyUelHRnqUQLb3k1noQW6glLf4HKW8GUvWi4NGW9qIogje1J/vj3Aj1yWxfAw0vyW7evk2EDAykDcn7fGd3ZmcnQTC0oQ0tt0W16KREGBWkpiWpWCB8lQh7ktQf7Qh7AuGLfo/U9K04vFGpVE4E/TZF6opEeCYRtiRBYufqlyA1OxaHl72Dj9Wii5JgWZBq2IMfd0GqIUhVZV1e8AIvSY1LUrt5wTOE7Ig4vFMY+LXlidMC4ZVrcNkqBGGJn+UUXtblWUHqbdHw8sgR3vAz3UXeJzw1RbyLatGZ3AJ8bBvZPi+q+eDj8G6/4GXT1e2e4AHhvEDYHgABuz2VWK7zPkHvvR9vv5UQFq3g+XR0cUiZ+uTHB8nawYtk/vtku1xoyLq8ah59bg88w28m89o7iJg1gucmi/sUH/DltUfJ+sFcE56d/76ftZ0QtrhpNIn+aD8iv5nCs6gOuTDSVcBhS1ws/JP1h5mRL3eAT1dhymQFcCDhSQtY6b4C+uIxgPCkBXzuvgIWrXKn2m2asGVT+MMc2DbJAaP6//zbY2OA3JGn5grsOxHA8KYgzuDJUEC3LcQ12hTIKTyZbiGDJM6q4Rt/55KpjYnC4KVxEhuW0U4iCoEn0zJqcZC1qyxZ/2NRueBJ90NPuwrgoZPNl2athPPIU+pxeN2omRMIP12IcAkvEH4YT/O4dbV9QKsIp5EndjUTFH2hORLhHB5hX6yKS8YC0lWo9vIwTlYXCSuPR38hsLWbtejcIFzqBamdnuemPKvsuwAMo57gmyIQlvoY/ZdBXuN7qEAg/wLU69KH0qnAhfGgVQ9c/UV+1dlwt2XIW/WxbUquIp9lPKsspjqp37kT1nJuusgHTG5w5O9QC1y2A9/GpyO3Hba9k94q+jNqxvqELcLSBnCE5zbcs/PFg2926Q94Df0a4RO/xy0xd5UD8TPr0IYW/P/2D5+LFXPdole1AAAAAElFTkSuQmCC"
+
+    notificationOk.appendChild(imgOk)
+
+    createContainNotification(text, notificationOk)
+    progressBar.style.animation = 'progress 2.5s 0.5s linear'
+    notification.style.animation = 'fad-in 3s linear'
 }
